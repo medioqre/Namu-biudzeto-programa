@@ -1,4 +1,4 @@
-import numpy as np
+ï»¿import numpy as np
 import matplotlib.pyplot as plt
 
     
@@ -10,14 +10,14 @@ def bar(pavadinimas, islaidos):
     y=range(len(islaidos))
     plt.bar(y, islaidos, color='green')
     plt.xticks(y, pavadinimas)
-    plt.ylabel('Iðlaidos (EUR)')
-    plt.title('Iðlaidos pagal kategorijas')
+    plt.ylabel('IÅ¡laidos (EUR)')
+    plt.title('IÅ¡laidos pagal kategorijas')
     
     plt.show()
 
 def pie(pavadinimas, islaidos):
   
     plt.pie(islaidos, labels=pavadinimas, autopct='%1.1f%%', startangle=140,shadow=True)
-    plt.title('Iðlaidos pagal kategorijas')
+    plt.title('IÅ¡laidos pagal kategorijas')
     
     plt.show()
