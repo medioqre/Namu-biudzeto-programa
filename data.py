@@ -1,4 +1,5 @@
-DATA = 'data.json'
+import json
+data = 'data.json'
 
 kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
 
