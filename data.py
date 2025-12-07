@@ -69,8 +69,8 @@ print(f'\n{data["pajamos"][0]['laikas']}') #printina kada gauti pinigai
 save_data(data) #saving data i json file
 
 
-print(f'\n{data["islaidos"][0]['pavadinimas']}') #printina kada gauti pinigai 
+print(f'\n{data["islaidos"][0]['pavadinimas']}') #printina islaidu pavadinima
 print(f'\n{data["islaidos"][0]['money']}') #printina kada gauti pinigai 
-print(f'\n{data["islaidos"][0]['laikas']}') #printina kada gauti pinigai 
-print(f'\n{data["islaidos"][0]['isl_kategorija']}') #printina kada gauti pinigai 
+print(f'\n{data["islaidos"][0]['laikas']}') #printina laikas
+print(f'\n{data["islaidos"][0]['isl_kategorija']}') #printina islaidu kategorija
 """
