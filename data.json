@@ -10,7 +10,7 @@
         {
             "pavadinimas": "Maxima",
             "isl_kategorija": "Maistas",
-            "money": 270,
+            "money": 50,
             "laikas": "2025-01-12"
         },
         {
@@ -18,6 +18,12 @@
             "isl_kategorija": "Transportas",
             "money": 130,
             "laikas": "2025-01-15"
+        },
+        {
+            "pavadinimas": "Maxima",
+            "isl_kategorija": "Maistas",
+            "money": 20,
+            "laikas": "2025-01-18"
         }
     ]
 }

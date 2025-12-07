@@ -11,24 +11,47 @@ def save_data(data):
     with open(datafailas, 'w') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-def add_pajamos(): #+ pajamos,kategorija iskaiciuotinai
-    pajamusuma=[i['money'] for i in data['pajamos']]
+def add_pajamos(): 
+    pajamu_suma=[i['money'] for i in data['pajamos']]
     paj_kategorija=[i['paj_kategorija'] for i in data['pajamos']]
+    paj_laikas=[i['laikas'] for i in data['pajamos']]
 
-def add_islaidos(islaidos,kategorija, daiktopavadinimas, menesis):
-    pass
+def add_islaidos():
+    isl_suma=[i['money'] for i in data['islaidos']]
+    isl_kategorija=[i['isl_kategorija'] for i in data['islaidos']]
+    isl_laikas=[i['laikas'] for i in data['islaidos']]
+    isl_pavadinimas=[i['pavadinimas'] for i in data['islaidos']]
+    #print(f"{isl_suma}\n{isl_kategorija}\n{isl_laikas}\n{isl_pavadinimas}")
+    return isl_kategorija, isl_suma
 
 def islaidos_pagal_kategorija():
-    pass
+    kategorija=add_islaidos()[0]
+    islaidos_suma=add_islaidos()[1]
+    kategorijos_suma={}
+    for kateg, islaidos in zip(kategorija,islaidos_suma): #zip susieja 2 list pvz [1,2,3] ir antras list ['a','b','c'], tai zip(pirmaslist,antraslist) output padaro 1 a, 2 b, 3 c  (ne kableliais o nauja line)
+        if kateg not in kategorijos_suma:
+            kategorijos_suma[kateg]=0
+        kategorijos_suma[kateg]+=islaidos
+    return kategorijos_suma
+    #print(kategorijos_suma)
 
 def menesiototal():
-    pass
+    menesio_suma={}
+
+    for i in data['islaidos']:
+        laikas=i["laikas"] #duoda pvz '2025-10-20'
+        menesis=laikas[:7] # palieka tik '2025-10'
+        islaidos=i['money'] #duoda tos dienos islaidos eur
+        menesio_suma[menesis] = menesio_suma.get(menesis,0)+islaidos #
+    #print(menesio_suma)
+    return menesio_suma
 
 
 
 data=load_data()
-print(add_pajamos()) # duoda list kuris rodo [900] ir tik vienas dalykas nes tik vienas ir yra smh
-
+#add_islaidos() # duoda kelis list is data.json 
+islaidos_pagal_kategorija()
+menesiototal()
 
 """
 #-------------temporary to see what data.py functions do-----------
