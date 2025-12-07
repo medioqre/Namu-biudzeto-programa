@@ -11,20 +11,26 @@ def save_data(data):
     with open(datafailas, 'w') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-def add_pajamos(): 
-    pajamu_suma=[i['money'] for i in data['pajamos']]
-    paj_kategorija=[i['paj_kategorija'] for i in data['pajamos']]
-    paj_laikas=[i['laikas'] for i in data['pajamos']]
+def add_pajamos(money,kategorija,laikas): 
+    data=load_data()
+    data['pajamos'].append({
+        'money':money,
+        'paj_kategorija':kategorija,
+        'laikas':laikas})
+    save_data(data)
 
-def add_islaidos():
-    isl_suma=[i['money'] for i in data['islaidos']]
-    isl_kategorija=[i['isl_kategorija'] for i in data['islaidos']]
-    isl_laikas=[i['laikas'] for i in data['islaidos']]
-    isl_pavadinimas=[i['pavadinimas'] for i in data['islaidos']]
-    #print(f"{isl_suma}\n{isl_kategorija}\n{isl_laikas}\n{isl_pavadinimas}")
-    return isl_kategorija, isl_suma
+def add_islaidos(money,kategorija,laikas,pavadinimas):
+    data=load_data()
+    data['islaidos'].append({
+        'money':money,
+        'isl_kategorija':kategorija,
+        'laikas':laikas,
+        'pavadinimas':pavadinimas,
+        })
+    save_data(data)
 
 def islaidos_pagal_kategorija():
+    data=load_data()
     kategorija=add_islaidos()[0]
     islaidos_suma=add_islaidos()[1]
     kategoriju_sumos={}
@@ -35,7 +41,8 @@ def islaidos_pagal_kategorija():
     return kategoriju_sumos
     #print(kategorijos_suma)
 
-def menesiototal():
+def menesio_total():
+    data=load_data()
     menesio_suma={}
 
     for i in data['islaidos']:
@@ -49,10 +56,8 @@ def menesiototal():
 
 
 
-data=load_data()
+
 #add_islaidos() # duoda kelis list is data.json 
-islaidos_pagal_kategorija()
-menesiototal()
 
 """
 #-------------temporary to see what data.py functions do-----------
