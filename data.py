@@ -1,8 +1,8 @@
 ﻿import json
 datafailas = 'data.json'
 
-kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
-
+isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
+paj_kategorijos=['Darbas', 'Dovanos','Kitos pajamos'] #nzn kazkas kitas pridekit daugiau
 def load_data():
     with open(datafailas, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
@@ -14,7 +14,7 @@ def save_data(data):
 def add_pajamos(money,kategorija,laikas): 
     data=load_data()
     data['pajamos'].append({
-        'money':money,
+        'money':money, #TIK money turi buti int (arba float)
         'paj_kategorija':kategorija,
         'laikas':laikas})
     save_data(data)
@@ -22,7 +22,7 @@ def add_pajamos(money,kategorija,laikas):
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
     data['islaidos'].append({
-        'money':money,
+        'money':money, #TIK money turi buti int (arba float)
         'isl_kategorija':kategorija,
         'laikas':laikas,
         'pavadinimas':pavadinimas,
@@ -56,8 +56,7 @@ def menesio_total():
 
 
 
-
-#add_islaidos() # duoda kelis list is data.json 
+    
 
 """
 #-------------temporary to see what data.py functions do-----------
