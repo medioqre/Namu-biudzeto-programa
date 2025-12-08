@@ -1,6 +1,7 @@
 ﻿from tkinter import *
 from tkinter import ttk
 from tkcalendar import DateEntry
+from data import add_pajamos
 
 def GUI():
 
@@ -46,7 +47,7 @@ def GUI():
 
     Suma=Entry(tab_pajamos, justify='center')
     Suma.place(relx=0.025, rely=0.26)
-
+    
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
     Data_lab.place(relx=0.02, rely=0.35)
 
@@ -54,7 +55,7 @@ def GUI():
     Data_ent.place(relx=0.025, rely=0.40)
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti')
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get()))
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
     Pasalinti_myg=Button(tab_pajamos, text='Pašalinti')

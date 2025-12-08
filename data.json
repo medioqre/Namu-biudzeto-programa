@@ -9,6 +9,11 @@
             "money": 400,
             "paj_kategorija": "drug selling",
             "laikas": "2025-12-31"
+        },
+        {
+            "money": "6767",
+            "paj_kategorija": "Savarankiška veikla",
+            "laikas": "2025-12-08"
         }
     ],
     "islaidos": [
