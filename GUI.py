@@ -32,7 +32,7 @@ def GUI():
     notebook.add(tab_islaidos, text="Išlaidos")
     notebook.add(tab_balansas, text="Balansas")
 
-    #PAJAMOS FRAME-----------------------------------------
+    #PAJAMOS FRAME----------------------------------------- 
     Pajamų_kat_label=Label(tab_pajamos, text='Pajamų kategorija:', font=('Arial', 12, 'bold'))
     Pajamų_kat_label.place(relx=0.02, rely=0.04)
 
