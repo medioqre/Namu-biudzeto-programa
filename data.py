@@ -1,4 +1,6 @@
 ﻿import json
+from tkinter import messagebox
+import os
 datafailas = 'data.json'
 
 isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
@@ -8,26 +10,34 @@ def load_data():
         return json.load(f)
 
 def save_data(data):
-    with open(datafailas, 'w') as f:
+    with open(datafailas, 'w', encoding='utf-8-sig') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 def add_pajamos(money,kategorija,laikas): 
     data=load_data()
-    data['pajamos'].append({
-        'money':money, #TIK money turi buti int (arba float)
+    try:
+        data['pajamos'].append({
+        'money':float(money), 
         'paj_kategorija':kategorija,
         'laikas':laikas})
-    save_data(data)
+        save_data(data)
+    except ValueError:
+        messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+    
 
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
-    data['islaidos'].append({
-        'money':money, #TIK money turi buti int (arba float)
+    try:
+        data['islaidos'].append({
+        'money':float(money), 
         'isl_kategorija':kategorija,
         'laikas':laikas,
         'pavadinimas':pavadinimas,
         })
-    save_data(data)
+        save_data(data)
+    except ValueError:
+        messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
+    
 
 def islaidos_pagal_kategorija():
     data=load_data()
