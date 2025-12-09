@@ -38,20 +38,38 @@ def add_islaidos(money,kategorija,laikas,pavadinimas):
     except ValueError:
         messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
     
+def delete_pajama(money,kategorija,laikas):
+    data=load_data()
+    for i in data['pajamos']:
+        if i['money'] == float(money) and i['paj_kategorija'] == kategorija and i['laikas'] == laikas:
+            data['pajamos'].remove(i)
+            break
+    save_data(data)
+
+def delete_islaida(pavadinimas, money,kategorija,laikas):
+    data=load_data()
+    for i in data['islaidos']:
+        if i['pavadinimas'] == pavadinimas and i['money'] == float(money) and i['isl_kategorija'] == kategorija and i['laikas'] == laikas:
+            data['islaidos'].remove(i)
+            break
+    save_data(data)
 
 def islaidos_pagal_kategorija():
     data=load_data()
-    kategorija=add_islaidos()[0]
-    islaidos_suma=add_islaidos()[1]
     kategoriju_sumos={}
-    for kateg, islaidos in zip(kategorija,islaidos_suma): #zip susieja 2 list pvz [1,2,3] ir antras list ['a','b','c'], tai zip(pirmaslist,antraslist) output padaro 1 a, 2 b, 3 c  (ne kableliais o nauja line)
-        if kateg not in kategoriju_sumos:
-            kategoriju_sumos[kateg]=0
-        kategoriju_sumos[kateg]+=islaidos
-    return kategoriju_sumos
-    #print(kategorijos_suma)
+    for i in data["islaidos"]:
+        if i['isl_kategorija'] not in kategoriju_sumos:
+            kategoriju_sumos[i['isl_kategorija']] = 0
 
-def menesio_total():
+        kategoriju_sumos[i['isl_kategorija']] += i['money']
+    print(kategoriju_sumos)
+    return kategoriju_sumos
+
+def menesio_pajamos():
+    pass
+
+
+def menesio_islaidos():
     data=load_data()
     menesio_suma={}
 
@@ -63,7 +81,6 @@ def menesio_total():
 
     #print(menesio_suma)
     return menesio_suma
-
 
 
     

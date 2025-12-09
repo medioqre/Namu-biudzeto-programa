@@ -1,11 +1,6 @@
 ﻿{
     "pajamos": [
         {
-            "money": 900,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-01-10"
-        },
-        {
             "money": 400,
             "paj_kategorija": "drug selling",
             "laikas": "2025-12-31"
