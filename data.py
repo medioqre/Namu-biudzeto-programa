@@ -78,24 +78,35 @@ def islaidos_pagal_kategorija():
     return kategoriju_sumos
 
 def menesio_pajamos():
-    pass
+    data=load_data()
+    menesio_paj_suma={}
+
+    for i in data['pajamos']:
+        laikas=i["laikas"] #duoda pvz '2025-10-20'
+        menesis=laikas[:7] # palieka tik '2025-10'
+        islaidos=i['money'] #duoda tos dienos islaidos eur
+        menesio_paj_suma[menesis] = menesio_paj_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
+
+    print(menesio_paj_suma)
+    return menesio_paj_suma
 
 
 def menesio_islaidos():
     data=load_data()
-    menesio_suma={}
+    menesio_isl_suma={}
 
     for i in data['islaidos']:
         laikas=i["laikas"] #duoda pvz '2025-10-20'
         menesis=laikas[:7] # palieka tik '2025-10'
         islaidos=i['money'] #duoda tos dienos islaidos eur
-        menesio_suma[menesis] = menesio_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
+        menesio_isl_suma[menesis] = menesio_isl_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
 
-    #print(menesio_suma)
-    return menesio_suma
+    print(menesio_isl_suma)
+    return menesio_isl_suma
 
 
-    
+menesio_islaidos()
+menesio_pajamos()
 
 """
 #-------------temporary to see what data.py functions do-----------
