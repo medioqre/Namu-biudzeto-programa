@@ -1,4 +1,5 @@
-﻿import json
+﻿from datetime import datetime
+import json
 from tkinter import messagebox
 import os
 datafailas = 'data.json'
@@ -13,30 +14,41 @@ def save_data(data):
     with open(datafailas, 'w', encoding='utf-8-sig') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
+def tikrint_laika(laikas):
+    try: 
+        datetime.strptime(laikas,"%Y-%m-%d")
+        return False
+    except ValueError:
+        return True 
+
 def add_pajamos(money,kategorija,laikas): 
     data=load_data()
-    try:
-        data['pajamos'].append({
-        'money':float(money), 
-        'paj_kategorija':kategorija,
-        'laikas':laikas})
-        save_data(data)
-    except ValueError:
-        messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
-    
-
+    if tikrint_laika(laikas):
+        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
+    else:
+        try:
+            data['pajamos'].append({
+            'money':float(money), 
+            'paj_kategorija':kategorija,
+            'laikas':laikas})
+            save_data(data)
+        except ValueError:
+            messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+   
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
-    try:
-        data['islaidos'].append({
-        'money':float(money), 
-        'isl_kategorija':kategorija,
-        'laikas':laikas,
-        'pavadinimas':pavadinimas,
-        })
-        save_data(data)
-    except ValueError:
-        messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
+    if tikrint_laika(laikas):
+        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
+    else:
+        try:
+            data['islaidos'].append({
+            'money':float(money), 
+            'isl_kategorija':kategorija,
+            'laikas':laikas,
+            'pavadinimas':pavadinimas,})
+            save_data(data)
+        except ValueError:
+            messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
     
 def delete_pajama(money,kategorija,laikas):
     data=load_data()

@@ -4,6 +4,21 @@
             "money": 400,
             "paj_kategorija": "drug selling",
             "laikas": "2025-12-31"
+        },
+        {
+            "money": 1212311231.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-13-18"
+        },
+        {
+            "money": 123123.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "12512"
+        },
+        {
+            "money": 123.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "labas"
         }
     ],
     "islaidos": [
