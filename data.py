@@ -2,6 +2,7 @@
 import json
 from tkinter import messagebox
 import os
+
 datafailas = 'data.json'
 
 isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
@@ -21,7 +22,7 @@ def tikrint_laika(laikas):
     except ValueError:
         return True 
 
-def add_pajamos(money,kategorija,laikas): 
+def add_pajamos(money,kategorija,laikas,Tree): 
     data=load_data()
     if tikrint_laika(laikas):
         messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
@@ -32,6 +33,7 @@ def add_pajamos(money,kategorija,laikas):
             'paj_kategorija':kategorija,
             'laikas':laikas})
             save_data(data)
+            Tree.insert('','end',values=(laikas,kategorija,money))
         except ValueError:
             messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
    
@@ -104,6 +106,13 @@ def menesio_islaidos():
     print(menesio_isl_suma)
     return menesio_isl_suma
 
+def pajamu_sar():
+    duomenys=load_data()
+    return duomenys.get('pajamos',[])
+
+def islaidu_sar():
+    duomenys=load_data()
+    islaidos=duomenys.get('islaidos',[])
 
 menesio_islaidos()
 menesio_pajamos()

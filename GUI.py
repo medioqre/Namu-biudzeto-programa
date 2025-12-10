@@ -1,7 +1,8 @@
 ﻿from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from tkcalendar import DateEntry
-from data import add_pajamos
+from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
 
 def GUI():
 
@@ -55,10 +56,10 @@ def GUI():
     Data_ent.place(relx=0.025, rely=0.40)
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get()))
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti')
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', command=lambda: remove_pajamos(Tree))
     Pasalinti_myg.place(relx=0.5, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
@@ -72,7 +73,19 @@ def GUI():
 
     Tree.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
 
+    pajamos=pajamu_sar()
+    for paj in pajamos:
+        Tree.insert('','end',values=(paj['laikas'],paj['paj_kategorija'],paj['money']))
 
+    def remove_pajamos(Tree):
+        pasirinkta=Tree.selection()
+        if not pasirinkta:
+            messagebox.showerror('Klaida','Pasirinkite kurį entry norite ištrinti.')
+        for item in pasirinkta:
+            values = Tree.item(item, "values")
+            data, kat, money = values
+            Tree.delete(item)
+            delete_pajama(money,kat,data)
 
     Pagrindinis_langas.mainloop()
 
