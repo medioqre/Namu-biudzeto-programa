@@ -1,15 +1,19 @@
 ﻿import numpy as np
 import matplotlib.pyplot as plt
+from data import islaidos_pagal_kategorija, menesio_islaidos
 
 # bar chartas
 def bar():
+    
+    data=islaidos_pagal_kategorija()
 
-    kategorija=['Maistas','Transportas','Pramogos']
-    islaidos=[270, 130, 85]
+    kategorijos=list(data.keys())
+    islaidos=list(data.values())
 
     y=range(len(islaidos))
     plt.bar(y, islaidos, color='green')
-    plt.xticks(y, kategorija)
+    plt.xticks(y, kategorijos)
+
     plt.xlabel('Išlaidų kategorijos')
     plt.ylabel('Išlaidos (EUR)')
     plt.title('Išlaidos pagal kategorijas')
@@ -19,10 +23,12 @@ def bar():
 # pie chartas
 def pie():
 
-    kategorija=['Maistas','Transportas','Pramogos']
-    islaidos=[270, 130, 85]
+    data=islaidos_pagal_kategorija()
+
+    kategorijos=list(data.keys())
+    islaidos=list(data.values())
   
-    plt.pie(islaidos, labels=kategorija, autopct='%1.1f%%', startangle=140,shadow=True)
+    plt.pie(islaidos, labels=kategorijos, autopct='%1.1f%%', startangle=140,shadow=True)
     plt.title('Išlaidos pagal kategorijas')
     
     plt.show()
@@ -30,17 +36,18 @@ def pie():
 # islaidu kas menesi chartas
 def menesiai():
 
-    menesiai=['Sausis','Vasaris','Kovas','Balandis','Gegužė']
-    islaidu_suma=[500, 600, 550, 700, 650]
+    data=menesio_islaidos()
 
-    plt.bar(menesiai, islaidu_suma, color='orange')
+    menesiai=list(data.keys())
+    suma=list(data.values())
+
+    plt.bar(menesiai, suma, color='orange')
     plt.xlabel('Mėnesiai')
     plt.ylabel('Išlaidos (EUR)')
     plt.title('Išlaidos kiekvieną mėnesį')
     
     plt.show()
 
-# aisku duomenys random kaip pvz. paiimti
 
 bar()
 pie()
