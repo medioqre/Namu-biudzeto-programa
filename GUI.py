@@ -1,7 +1,28 @@
 ﻿from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from tkcalendar import DateEntry
-from data import add_pajamos
+from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
+
+def remove_pajamos(Tree):
+    pasirinkta=Tree.selection()
+    if not pasirinkta:
+        messagebox.showerror('Klaida','Pasirinkite kurį entry norite ištrinti.')
+    for item in pasirinkta:
+        values = Tree.item(item, "values")
+        data, kat, money = values
+        Tree.delete(item)
+        delete_pajama(money,kat,data)
+
+def rykiavimas_tree(tree,i,reverse):
+    duomenys = [(tree.set(k, i), k) for k in tree.get_children("")]
+    try:
+        duomenys.sort(key=lambda t: float(t[0]), reverse=reverse)
+    except ValueError:
+        duomenys.sort(key=lambda t: t[0], reverse=reverse)
+    for index, (val, k) in enumerate(duomenys):
+        tree.move(k, "", index)
+    tree.heading(i, command=lambda kop=i: rykiavimas_tree(tree, kop, not reverse))
 
 def GUI():
 
@@ -55,10 +76,10 @@ def GUI():
     Data_ent.place(relx=0.025, rely=0.40)
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get()))
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti')
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', command=lambda: remove_pajamos(Tree))
     Pasalinti_myg.place(relx=0.5, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
@@ -67,12 +88,14 @@ def GUI():
     Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
 
     for i in Skyriai:
-        Tree.heading(i, text=i)
+        Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
         Tree.column(i, width=150, stretch=True)
 
     Tree.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
 
-
+    pajamos=pajamu_sar()
+    for paj in pajamos:
+        Tree.insert('','end',values=(paj['laikas'],paj['paj_kategorija'],paj['money']))
 
     Pagrindinis_langas.mainloop()
 

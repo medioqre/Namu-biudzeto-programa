@@ -1,6 +1,8 @@
-﻿import json
+﻿from datetime import datetime
+import json
 from tkinter import messagebox
 import os
+
 datafailas = 'data.json'
 
 isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
@@ -13,60 +15,107 @@ def save_data(data):
     with open(datafailas, 'w', encoding='utf-8-sig') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-def add_pajamos(money,kategorija,laikas): 
-    data=load_data()
-    try:
-        data['pajamos'].append({
-        'money':float(money), 
-        'paj_kategorija':kategorija,
-        'laikas':laikas})
-        save_data(data)
+def tikrint_laika(laikas):
+    try: 
+        datetime.strptime(laikas,"%Y-%m-%d")
+        return False
     except ValueError:
-        messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
-    
+        return True 
 
+def add_pajamos(money,kategorija,laikas,Tree): 
+    data=load_data()
+    if tikrint_laika(laikas):
+        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
+    else:
+        try:
+            data['pajamos'].append({
+            'money':float(money), 
+            'paj_kategorija':kategorija,
+            'laikas':laikas})
+            save_data(data)
+            Tree.insert('','end',values=(laikas,kategorija,money))
+        except ValueError:
+            messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+   
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
-    try:
-        data['islaidos'].append({
-        'money':float(money), 
-        'isl_kategorija':kategorija,
-        'laikas':laikas,
-        'pavadinimas':pavadinimas,
-        })
-        save_data(data)
-    except ValueError:
-        messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
+    if tikrint_laika(laikas):
+        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
+    else:
+        try:
+            data['islaidos'].append({
+            'money':float(money), 
+            'isl_kategorija':kategorija,
+            'laikas':laikas,
+            'pavadinimas':pavadinimas,})
+            save_data(data)
+        except ValueError:
+            messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
     
+def delete_pajama(money,kategorija,laikas):
+    data=load_data()
+    for i in data['pajamos']:
+        if i['money'] == float(money) and i['paj_kategorija'] == kategorija and i['laikas'] == laikas:
+            data['pajamos'].remove(i)
+            break
+    save_data(data)
+
+def delete_islaida(pavadinimas, money,kategorija,laikas):
+    data=load_data()
+    for i in data['islaidos']:
+        if i['pavadinimas'] == pavadinimas and i['money'] == float(money) and i['isl_kategorija'] == kategorija and i['laikas'] == laikas:
+            data['islaidos'].remove(i)
+            break
+    save_data(data)
 
 def islaidos_pagal_kategorija():
     data=load_data()
-    kategorija=add_islaidos()[0]
-    islaidos_suma=add_islaidos()[1]
     kategoriju_sumos={}
-    for kateg, islaidos in zip(kategorija,islaidos_suma): #zip susieja 2 list pvz [1,2,3] ir antras list ['a','b','c'], tai zip(pirmaslist,antraslist) output padaro 1 a, 2 b, 3 c  (ne kableliais o nauja line)
-        if kateg not in kategoriju_sumos:
-            kategoriju_sumos[kateg]=0
-        kategoriju_sumos[kateg]+=islaidos
-    return kategoriju_sumos
-    #print(kategorijos_suma)
+    for i in data["islaidos"]:
+        if i['isl_kategorija'] not in kategoriju_sumos:
+            kategoriju_sumos[i['isl_kategorija']] = 0
 
-def menesio_total():
+        kategoriju_sumos[i['isl_kategorija']] += i['money']
+    print(kategoriju_sumos)
+    return kategoriju_sumos
+
+def menesio_pajamos():
     data=load_data()
-    menesio_suma={}
+    menesio_paj_suma={}
+
+    for i in data['pajamos']:
+        laikas=i["laikas"] #duoda pvz '2025-10-20'
+        menesis=laikas[:7] # palieka tik '2025-10'
+        islaidos=i['money'] #duoda tos dienos islaidos eur
+        menesio_paj_suma[menesis] = menesio_paj_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
+
+    print(menesio_paj_suma)
+    return menesio_paj_suma
+
+
+def menesio_islaidos():
+    data=load_data()
+    menesio_isl_suma={}
 
     for i in data['islaidos']:
         laikas=i["laikas"] #duoda pvz '2025-10-20'
         menesis=laikas[:7] # palieka tik '2025-10'
         islaidos=i['money'] #duoda tos dienos islaidos eur
-        menesio_suma[menesis] = menesio_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
+        menesio_isl_suma[menesis] = menesio_isl_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
 
-    #print(menesio_suma)
-    return menesio_suma
+    print(menesio_isl_suma)
+    return menesio_isl_suma
 
+def pajamu_sar():
+    duomenys=load_data()
+    return duomenys.get('pajamos',[])
 
+def islaidu_sar():
+    duomenys=load_data()
+    islaidos=duomenys.get('islaidos',[])
 
-    
+menesio_islaidos()
+menesio_pajamos()
 
 """
 #-------------temporary to see what data.py functions do-----------
