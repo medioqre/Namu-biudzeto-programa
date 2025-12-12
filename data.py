@@ -115,9 +115,6 @@ def menesio_islaidos():
     print(menesio_isl_suma)
     return menesio_isl_suma
 
-def pajamu_sar():
-    duomenys=load_data()
-    return duomenys.get('pajamos',[])
 
 def islaidu_sar():
     duomenys=load_data()
