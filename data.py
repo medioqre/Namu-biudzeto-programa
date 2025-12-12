@@ -2,15 +2,16 @@
 import json
 from tkinter import messagebox
 import os
+
 datafailas = 'data.json'
 
 isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
 paj_kategorijos=['Darbas', 'Dovanos','Kitos pajamos'] #nzn kazkas kitas pridekit daugiau
 def load_data():
-    with open(datafailas, 'r', encoding='utf-8-sig') as f:
-        return json.load(f)
     if not os.path.exists(datafailas):
         save_data({"pajamos": [], "islaidos": []})
+    with open(datafailas, 'r', encoding='utf-8-sig') as f:
+        return json.load(f)
 
 
 def save_data(data):
@@ -24,7 +25,7 @@ def tikrint_laika(laikas):
     except ValueError:
         messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD")
 
-def add_pajamos(money,kategorija,laikas): 
+def add_pajamos(money,kategorija,laikas,Tree): 
     data=load_data()
     tikrint_laika(laikas)
 
@@ -37,6 +38,7 @@ def add_pajamos(money,kategorija,laikas):
         'paj_kategorija':kategorija,
         'laikas':laikas})
         save_data(data)
+        Tree.insert('','end',values=(laikas,kategorija,money))
     except ValueError:
         messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
    
@@ -99,7 +101,6 @@ def menesio_pajamos():
     print(menesio_paj_suma)
     return menesio_paj_suma
 
-
 def menesio_islaidos():
     data=load_data()
     menesio_isl_suma={}
@@ -114,6 +115,14 @@ def menesio_islaidos():
     print(menesio_isl_suma)
     return menesio_isl_suma
 
+def pajamu_sar():
+    duomenys=load_data()
+    return duomenys.get('pajamos',[])
+
+def islaidu_sar():
+    duomenys=load_data()
+    islaidos=duomenys.get('islaidos',[])
+
 def menesio_balansas():
     paj= menesio_pajamos()
     isl= menesio_islaidos()
@@ -127,26 +136,8 @@ def menesio_balansas():
     balansas=dict(sorted(balansas.items()))
     print(balansas)
     return balansas
-
     
 
 
 
 menesio_balansas()
-
-"""
-#-------------temporary to see what data.py functions do-----------
-data=load_data() # cia dabar dictionary
-print(data) 
-print(f'\n{data["pajamos"][0]['money']}') #printina "900" 
-print(f'\n{data["pajamos"][0]['paj_kategorija']}') #printina is kur gavo tuos pinigus (pajamu kategorija)
-print(f'\n{data["pajamos"][0]['laikas']}') #printina kada gauti pinigai 
-#jei bandysime vietoj [0] parasyti [1] bus error nes tik vienas pajamos entry yra 
-save_data(data) #saving data i json file
-
-
-print(f'\n{data["islaidos"][0]['pavadinimas']}') #printina islaidu pavadinima
-print(f'\n{data["islaidos"][0]['money']}') #printina kada gauti pinigai 
-print(f'\n{data["islaidos"][0]['laikas']}') #printina laikas
-print(f'\n{data["islaidos"][0]['isl_kategorija']}') #printina islaidu kategorija
-"""
