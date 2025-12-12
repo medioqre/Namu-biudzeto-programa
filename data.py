@@ -127,3 +127,15 @@ def menesio_balansas():
             balansas[menesis] = paj.get(menesis,0) - isl.get(menesis, 0)
     balansas=dict(sorted(balansas.items()))
     return balansas
+
+def gaut_menesius():
+    data = load_data()
+    menesiai = set()
+
+    for i in data.get("pajamos", []):
+        menesiai.add(i["laikas"][:7])
+
+    for i in data.get("islaidos", []):
+        menesiai.add(i["laikas"][:7])
+
+    return sorted(menesiai)
