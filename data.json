@@ -6,11 +6,6 @@
             "laikas": "2025-12-31"
         },
         {
-            "money": 20,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-18"
-        },
-        {
             "money": 256,
             "paj_kategorija": "Darbas",
             "laikas": "2025-09-18"
@@ -24,6 +19,16 @@
             "money": 323.0,
             "paj_kategorija": "Savarankiška veikla",
             "laikas": "2026-05-06"
+        },
+        {
+            "money": 67.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-12"
+        },
+        {
+            "money": 6767.0,
+            "paj_kategorija": "t.t.",
+            "laikas": "2026-02-04"
         }
     ],
     "islaidos": [
@@ -44,6 +49,12 @@
             "isl_kategorija": "Maistas",
             "money": 20,
             "laikas": "2025-01-18"
+        },
+        {
+            "money": 500.0,
+            "isl_kategorija": "idk bruh",
+            "laikas": "2025-12-12",
+            "pavadinimas": "dalykas on god"
         }
     ]
 }

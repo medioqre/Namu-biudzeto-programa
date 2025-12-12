@@ -83,8 +83,6 @@ def islaidos_pagal_kategorija():
             kategoriju_sumos[i['isl_kategorija']] = 0
 
         kategoriju_sumos[i['isl_kategorija']] += i['money']
-    #kategoriju_sumos=dict(sorted(kategoriju_sumos.items()))
-    print(kategoriju_sumos)
     return kategoriju_sumos
 
 def menesio_pajamos():
@@ -96,9 +94,6 @@ def menesio_pajamos():
         menesis=laikas[:7] # palieka tik '2025-10'
         islaidos=i['money'] #duoda tos dienos islaidos eur
         menesio_paj_suma[menesis] = menesio_paj_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
-
-    #menesio_paj_suma=dict(sorted(menesio_paj_suma.items()))
-    print(menesio_paj_suma)
     return menesio_paj_suma
 
 def menesio_islaidos():
@@ -110,11 +105,11 @@ def menesio_islaidos():
         menesis=laikas[:7] # palieka tik '2025-10'
         islaidos=i['money'] #duoda tos dienos islaidos eur
         menesio_isl_suma[menesis] = menesio_isl_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
-
-    #menesio_isl_suma=dict(sorted(menesio_isl_suma.items()))
-    print(menesio_isl_suma)
     return menesio_isl_suma
 
+def pajamu_sar():
+    duomenys=load_data()
+    return duomenys.get('pajamos',[])
 
 def islaidu_sar():
     duomenys=load_data()
@@ -131,10 +126,4 @@ def menesio_balansas():
         if menesis not in balansas:
             balansas[menesis] = paj.get(menesis,0) - isl.get(menesis, 0)
     balansas=dict(sorted(balansas.items()))
-    print(balansas)
     return balansas
-    
-
-
-
-menesio_balansas()
