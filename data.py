@@ -28,11 +28,10 @@ def add_pajamos(money,kategorija,laikas):
     data=load_data()
     tikrint_laika(laikas)
 
-    if float(money) <= 0:
-        messagebox.showerror("Klaida", "Suma turi būti teigiama")
-        return
-
     try:
+        if float(money) <=0:
+            messagebox.showerror("Klaida", "Suma turi būti teigiama ir ne nulis")
+            return
         data['pajamos'].append({
         'money':float(money), 
         'paj_kategorija':kategorija,
@@ -45,11 +44,10 @@ def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
     tikrint_laika(laikas)
 
-    if float(money) <= 0:
-        messagebox.showerror("Klaida", "Suma turi būti teigiama")
-        return
-
     try:
+        if float(money) <=0:
+            messagebox.showerror("Klaida", "Suma turi būti teigiama ir ne nulis")
+            return
         data['islaidos'].append({
         'money':float(money), 
         'isl_kategorija':kategorija,
@@ -83,6 +81,7 @@ def islaidos_pagal_kategorija():
             kategoriju_sumos[i['isl_kategorija']] = 0
 
         kategoriju_sumos[i['isl_kategorija']] += i['money']
+    #kategoriju_sumos=dict(sorted(kategoriju_sumos.items()))
     print(kategoriju_sumos)
     return kategoriju_sumos
 
@@ -96,6 +95,7 @@ def menesio_pajamos():
         islaidos=i['money'] #duoda tos dienos islaidos eur
         menesio_paj_suma[menesis] = menesio_paj_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
 
+    #menesio_paj_suma=dict(sorted(menesio_paj_suma.items()))
     print(menesio_paj_suma)
     return menesio_paj_suma
 
@@ -110,14 +110,29 @@ def menesio_islaidos():
         islaidos=i['money'] #duoda tos dienos islaidos eur
         menesio_isl_suma[menesis] = menesio_isl_suma.get(menesis,0)+islaidos #.get sako -> jei menesio_suma[menesis] egzistuoja, tai naudoti jo reiksme, o jeigu ne tai naudoti 0. pvz menesis='2025-05' ir kolkas nera jo menesio_suma={} zodyne, tai bus menesio_suma['2025-05']=0+islaidos
 
+    #menesio_isl_suma=dict(sorted(menesio_isl_suma.items()))
     print(menesio_isl_suma)
     return menesio_isl_suma
 
+def menesio_balansas():
+    paj= menesio_pajamos()
+    isl= menesio_islaidos()
+    balansas={}
+    for menesis in paj:
+        balansas[menesis] = paj.get(menesis,0) -isl.get(menesis,0)
+
+    for menesis in isl:
+        if menesis not in balansas:
+            balansas[menesis] = paj.get(menesis,0) - isl.get(menesis, 0)
+    balansas=dict(sorted(balansas.items()))
+    print(balansas)
+    return balansas
+
+    
 
 
 
-menesio_islaidos()
-menesio_pajamos()
+menesio_balansas()
 
 """
 #-------------temporary to see what data.py functions do-----------
