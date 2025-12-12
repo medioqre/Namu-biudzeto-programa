@@ -9,6 +9,9 @@ paj_kategorijos=['Darbas', 'Dovanos','Kitos pajamos'] #nzn kazkas kitas pridekit
 def load_data():
     with open(datafailas, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
+    if not os.path.exists(datafailas):
+        save_data({"pajamos": [], "islaidos": []})
+
 
 def save_data(data):
     with open(datafailas, 'w', encoding='utf-8-sig') as f:
@@ -19,36 +22,42 @@ def tikrint_laika(laikas):
         datetime.strptime(laikas,"%Y-%m-%d")
         return False
     except ValueError:
-        return True 
+        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD")
 
 def add_pajamos(money,kategorija,laikas): 
     data=load_data()
-    if tikrint_laika(laikas):
-        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
-    else:
-        try:
-            data['pajamos'].append({
-            'money':float(money), 
-            'paj_kategorija':kategorija,
-            'laikas':laikas})
-            save_data(data)
-        except ValueError:
-            messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+    tikrint_laika(laikas)
+
+    if float(money) <= 0:
+        messagebox.showerror("Klaida", "Suma turi būti teigiama")
+        return
+
+    try:
+        data['pajamos'].append({
+        'money':float(money), 
+        'paj_kategorija':kategorija,
+        'laikas':laikas})
+        save_data(data)
+    except ValueError:
+        messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
    
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
-    if tikrint_laika(laikas):
-        messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD ir būti teisinga")
-    else:
-        try:
-            data['islaidos'].append({
-            'money':float(money), 
-            'isl_kategorija':kategorija,
-            'laikas':laikas,
-            'pavadinimas':pavadinimas,})
-            save_data(data)
-        except ValueError:
-            messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
+    tikrint_laika(laikas)
+
+    if float(money) <= 0:
+        messagebox.showerror("Klaida", "Suma turi būti teigiama")
+        return
+
+    try:
+        data['islaidos'].append({
+        'money':float(money), 
+        'isl_kategorija':kategorija,
+        'laikas':laikas,
+        'pavadinimas':pavadinimas,})
+        save_data(data)
+    except ValueError:
+        messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
     
 def delete_pajama(money,kategorija,laikas):
     data=load_data()
@@ -103,6 +112,8 @@ def menesio_islaidos():
 
     print(menesio_isl_suma)
     return menesio_isl_suma
+
+
 
 
 menesio_islaidos()
