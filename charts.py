@@ -1,44 +1,74 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from data import islaidos_pagal_kategorija, menesio_islaidos
+from data import islaidos_pagal_kategorija, menesio_islaidos, menesio_pajamos, menesio_balansas
 
 # bar chartas
-def bar(): #-----------padaryk kad bar chartas rodytu pajamas ir islaidas vieno menesio. pvz x asis yra 2025-01 ir y asis bus 2 stulpeliai, vienas rodys pajamas, kitas islaidas
-    
-    data=islaidos_pagal_kategorija()
+def bar():
 
-    kategorijos=list(data.keys())
-    islaidos=list(data.values())
+    paj=menesio_pajamos()
+    isl=menesio_islaidos()
 
-    y=range(len(islaidos))
-    plt.bar(y, islaidos, color='green')
-    plt.xticks(y, kategorijos)
+    menesiai=[]
 
-    plt.xlabel('Išlaidų kategorijos')
-    plt.ylabel('Išlaidos (EUR)')
-    plt.title('Išlaidos pagal kategorijas')
-    
+    for m in paj.keys():
+        if m not in menesiai:
+            menesiai.append(m)
+
+    for m in isl.keys():
+        if m not in menesiai:
+            menesiai.append(m)
+
+    menesiai.sort()
+
+    pajamos = [paj.get(m, 0) for m in menesiai]
+    islaidos = [isl.get(m, 0) for m in menesiai]
+
+    x = np.arange(len(menesiai))
+    w = 0.4
+
+    plt.bar(x - w/2, pajamos, width=w, label="Pajamos")
+    plt.bar(x + w/2, islaidos, width=w, label="Išlaidos")
+
+    plt.xticks(x, menesiai, rotation=45, ha="right")
+    plt.xlabel("Mėnuo")
+    plt.ylabel("Suma (EUR)")
+    plt.title("Pajamos ir išlaidos pagal mėnesį")
+    plt.legend()
+    plt.tight_layout()
     plt.show()
 
-def pie(pavadinimas, islaidos): #-------padaryk kad rodytu pie pagal islaidu kategorijas 
+    plt.show()
+
+# pie chartas
+def pie():
+
+    data=islaidos_pagal_kategorija()
+
+    pavadinimas=list(data.keys())
+    islaidos=list(data.values())
   
     plt.pie(islaidos, labels=pavadinimas, autopct='%1.1f%%', startangle=140,shadow=True)
     plt.title('Išlaidos pagal kategorijas')
     
     plt.show()
 
-# islaidu kas menesi chartas
-def menesiai():#----------pakeisk kad rodytu menesio_balansas() is data.py (dabar rodo menesio_islaidos(), bet butu gerai kad rodytu balansa). ------line plot o ne bar ------
+# plot menesio balanso chartas
+def menesiai():
 
-    data=menesio_islaidos() 
+    bal=menesio_balansas()
 
-    menesiai=list(data.keys())
-    suma=list(data.values())
+    menesiai=list(bal.keys())
+    suma=list(bal.values())
 
-    plt.bar(menesiai, suma, color='orange')
-    plt.xlabel('Mėnesiai')
-    plt.ylabel('Išlaidos (EUR)')
-    plt.title('Išlaidos kiekvieną mėnesį')
+    x=np.arange(len(menesiai))
+    plt.plot(x,suma,marker='o')
+
+    plt.xticks(x, menesiai, rotation=45, ha='right')
+    plt.axhline(0, color='red')
+    plt.xlabel('Mėnuo')
+    plt.ylabel('Balansas (EUR)')
+    plt.title('Mėnesio balansas')
+    plt.tight_layout()
     
     plt.show()
 
