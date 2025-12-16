@@ -63,18 +63,24 @@ def GUI():
     Pajamu_combo.current(0)
     Pajamu_combo.place(relx=0.025, rely=0.1)
 
+    Pajamu_pav_lab=Label(tab_pajamos, text='Pavadinimas', font=('Arial', 12, 'bold'))
+    Pajamu_pav_lab.place(relx=0.02, rely=0.15)
+
+    Pajamu_Pavadinimas=Entry(tab_pajamos, justify='center')
+    Pajamu_Pavadinimas.place(relx=0.025, rely=0.2)
+
     
     Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.2)
+    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
 
     Suma=Entry(tab_pajamos, justify='center')
-    Suma.place(relx=0.025, rely=0.26)
+    Suma.place(relx=0.025, rely=0.32)
     
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_lab.place(relx=0.02, rely=0.35)
+    Data_lab.place(relx=0.02, rely=0.4)
 
     Data_ent=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    Data_ent.place(relx=0.025, rely=0.40)
+    Data_ent.place(relx=0.025, rely=0.46)
 
     #Buttons
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
@@ -111,18 +117,24 @@ def GUI():
     Islaidu_combo.current(0)
     Islaidu_combo.place(relx=0.025, rely=0.1)
 
+    Islaidu_pav_lab=Label(tab_islaidos, text='Pavadinimas', font=('Arial', 12, 'bold'))
+    Islaidu_pav_lab.place(relx=0.02, rely=0.15)
+
+    Islaidu_Pavadinimas=Entry(tab_islaidos, justify='center')
+    Islaidu_Pavadinimas.place(relx=0.025, rely=0.2)
+
     
     Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.2)
+    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
 
     Suma=Entry(tab_islaidos, justify='center')
-    Suma.place(relx=0.025, rely=0.26)
+    Suma.place(relx=0.025, rely=0.32)
     
     Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_islaidos_lab.place(relx=0.02, rely=0.35)
+    Data_islaidos_lab.place(relx=0.02, rely=0.4)
 
     Data_islaidos_ent=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    Data_islaidos_ent.place(relx=0.025, rely=0.40)
+    Data_islaidos_ent.place(relx=0.025, rely=0.46)
 
     #Buttons
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold') )
