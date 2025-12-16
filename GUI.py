@@ -2,8 +2,8 @@
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
-from data import *
-
+from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
+from charts import bar,pie,menesiai
 def remove_pajamos(Tree):
     pasirinkta=Tree.selection()
     if not pasirinkta:
@@ -80,15 +80,21 @@ def GUI():
     Pajamu_combo.current(0)
     Pajamu_combo.place(relx=0.025, rely=0.1)
 
+    Pajamu_pav_lab=Label(tab_pajamos, text='Pavadinimas', font=('Arial', 12, 'bold'))
+    Pajamu_pav_lab.place(relx=0.02, rely=0.15)
+
+    Pajamu_Pavadinimas=Entry(tab_pajamos, justify='center')
+    Pajamu_Pavadinimas.place(relx=0.025, rely=0.2)
+
     
     Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.2)
+    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
 
     paj_suma=Entry(tab_pajamos, justify='center')
     paj_suma.place(relx=0.025, rely=0.26)
     
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_lab.place(relx=0.02, rely=0.35)
+    Data_lab.place(relx=0.02, rely=0.4)
 
     data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
     data_ent_paj.place(relx=0.025, rely=0.40)
@@ -108,13 +114,13 @@ def GUI():
     Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai=('Data', 'Kategorija', 'Suma')
+    Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
 
     Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
 
     for i in Skyriai:
         Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
-        Tree.column(i, width=150, stretch=True)
+        Tree.column(i, width=80, stretch=True)
 
     Tree.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
 
@@ -137,15 +143,21 @@ def GUI():
     Islaidu_combo.current(0)
     Islaidu_combo.place(relx=0.025, rely=0.1)
 
+    Islaidu_pav_lab=Label(tab_islaidos, text='Pavadinimas', font=('Arial', 12, 'bold'))
+    Islaidu_pav_lab.place(relx=0.02, rely=0.15)
+
+    Islaidu_Pavadinimas=Entry(tab_islaidos, justify='center')
+    Islaidu_Pavadinimas.place(relx=0.025, rely=0.2)
+
     
     Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.2)
+    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
 
     isl_suma=Entry(tab_islaidos, justify='center')
     isl_suma.place(relx=0.025, rely=0.26)
     
     Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_islaidos_lab.place(relx=0.02, rely=0.35)
+    Data_islaidos_lab.place(relx=0.02, rely=0.4)
 
     data_ent_isl=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
     data_ent_isl.place(relx=0.025, rely=0.40)
@@ -164,16 +176,17 @@ def GUI():
     Pasalinti_islaidos_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai_islaidos=('Data', 'Kategorija', 'Suma')
+    Skyriai_islaidos=('Pavadiniams', 'Data', 'Kategorija', 'Suma')
 
     Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=150, stretch=True)
+        Tree_islaidos.column(col, width=80, stretch=True)
 
     Tree_islaidos.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
     
+
 
 
     #BALANSO TAB----------------------------------------------------
@@ -199,15 +212,20 @@ def GUI():
     tab_bar = Frame(graf_note)
     tab_pie = Frame(graf_note)
 
+    # Funkcija nupiesia grafikus GUI lange pagal tabus + juos refreshina
+    def grafikai(event=None):
+        bar(tab_bar)
+        pie(tab_pie)
+        menesiai(tab_menesiai)
+
     graf_note.add(tab_menesiai, text='Mėnesiai')
     graf_note.add(tab_bar, text='"Bar" grafikas')
     graf_note.add(tab_pie, text='"Pie" grafikas')
 
+    grafikai()
+    # paspaudus ant kurio nors tabo grafikai refreshinas
+    graf_note.bind("<<NotebookTabChanged>>", grafikai)
 
-
-    
-
-    
     Pagrindinis_langas.mainloop()
 
 GUI()
