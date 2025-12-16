@@ -4,52 +4,49 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 from data import *
 from charts import bar,pie,menesiai
-
-def remove_pajamos(Tree):
-    pasirinkta=Tree.selection()
-    if not pasirinkta:
-        messagebox.showerror('Klaida','Pasirinkite kurį entry norite ištrinti.')
-    for item in pasirinkta:
-        values = Tree.item(item, "values")
-        data, kat, money = values
-        Tree.delete(item)
-        delete_pajama(money,kat,data) 
-    #------------------refresh_charts()------------ cia idet arba nezinau paskiau
-
-def rykiavimas_tree(tree,i,reverse):
-    duomenys = [(tree.set(k, i), k) for k in tree.get_children("")]
-    try:
-        duomenys.sort(key=lambda t: float(t[0]), reverse=reverse)
-    except ValueError:
-        duomenys.sort(key=lambda t: t[0], reverse=reverse)
-    for index, (val, k) in enumerate(duomenys):
-        tree.move(k, "", index)
-    tree.heading(i, command=lambda kop=i: rykiavimas_tree(tree, kop, not reverse))
-
-def refresh_islaidu_tree(Tree):
-    for i in Tree.get_children():
-        Tree.delete(i)
-    for isl in list(islaidu_sar()):
-        Tree.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
-
-def refresh_pajamu_tree(Tree):
-    for i in Tree.get_children():
-        Tree.delete(i)
-    for paj in pajamu_sar():
-        Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
-
-def refresh_balanso_label():
-    newlabel=total_balansas()
-    balansas_lab.config(text=f'Balansas: {total_balansas()} Eur')
-    
  
-
 def GUI():
+    def rykiavimas_tree(i,reverse):
+        duomenys = [(Tree.set(k, i), k) for k in Tree.get_children("")]
+        try:
+            duomenys.sort(key=lambda t: float(t[0]), reverse=reverse)
+        except ValueError:
+            duomenys.sort(key=lambda t: t[0], reverse=reverse)
+        for index, (val, k) in enumerate(duomenys):
+            Tree.move(k, "", index)
+        Tree.heading(i, command=lambda kop=i: rykiavimas_tree(Tree, kop, not reverse))
+
+    def refresh_islaidu_tree():
+        for i in Tree.get_children():
+            Tree.delete(i)
+        for isl in list(islaidu_sar()):
+            Tree.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
+
+    def refresh_pajamu_tree():
+        for i in Tree.get_children():
+            Tree.delete(i)
+        for paj in pajamu_sar():
+            Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
+        def refresh_balanso_label():
+            newlabel=total_balansas()
+            balansas_lab.config(text=f'Balansas: {total_balansas()} Eur')
+
+    def remove_pajamos():
+        pasirinkta=Tree.selection()
+        if not pasirinkta:
+            messagebox.showerror('Klaida','Pasirinkite kurį entry norite ištrinti.')
+        for item in pasirinkta:
+            values = Tree.item(item, "values")
+            data, kat, money = values
+            Tree.delete(item)
+            delete_pajama(money,kat,data) 
+        refresh_balanso_label()
+        refresh_grafikus()
 
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
-    Pagrindinis_langas.geometry('800x500')
+    Pagrindinis_langas.geometry('800x700')
 
     #Main meniu------------------------------------------
     Meniu=Menu(Pagrindinis_langas)
@@ -101,17 +98,17 @@ def GUI():
     data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
     data_ent_paj.place(relx=0.025, rely=0.40)
 
-    def on_addpaj_click(Tree):
+    def on_addpaj_click():
         if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
-            refresh_pajamu_tree(Tree)
+            refresh_pajamu_tree()
             refresh_balanso_label()
             refresh_grafikus()
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda:on_addpaj_click(Tree))
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=lambda: remove_pajamos(Tree)) 
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos) 
     Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
@@ -163,14 +160,14 @@ def GUI():
     data_ent_isl=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
     data_ent_isl.place(relx=0.025, rely=0.40)
 
-    def on_addisl_click(Tree):
+    def on_addisl_click():
         if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get(), Islaidu_Pavadinimas.get()):
-            refresh_islaidu_tree(Tree)
+            refresh_islaidu_tree()
             refresh_balanso_label()
             refresh_grafikus()
 
     #Buttons
-    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = lambda: on_addisl_click(Tree))
+    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
     Prideti_islaidos_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
     Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
@@ -218,16 +215,15 @@ def GUI():
     tab_pie = Frame(graf_note)
 
     # Funkcija nupiesia grafikus GUI lange pagal tabus + juos refreshina
-    def refresh_grafikus(event=None):
-        bar(tab_bar)
-        pie(tab_pie)
-        menesiai(tab_menesiai)  
-
     graf_note.add(tab_menesiai, text='Mėnesiai')
     graf_note.add(tab_bar, text='"Bar" grafikas')
     graf_note.add(tab_pie, text='"Pie" grafikas')
 
     # paspaudus ant kurio nors tabo grafikai refreshinas
+    def refresh_grafikus():
+        bar(tab_bar)
+        pie(tab_pie)
+        menesiai(tab_menesiai) 
     refresh_grafikus()
 
     Pagrindinis_langas.mainloop()

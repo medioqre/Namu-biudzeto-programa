@@ -36,11 +36,6 @@
             "laikas": "2025-12-16"
         },
         {
-            "money": 23.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
-        },
-        {
             "money": 123.0,
             "paj_kategorija": "Darbas",
             "laikas": "2025-12-16"
@@ -49,11 +44,6 @@
             "money": 500.0,
             "paj_kategorija": "Darbas",
             "laikas": "2026-01-08"
-        },
-        {
-            "money": 4.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
         },
         {
             "money": 1.0,
