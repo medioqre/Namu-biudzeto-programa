@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
 from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
+from charts import bar,pie,menesiai
 
 def remove_pajamos(Tree):
     pasirinkta=Tree.selection()
@@ -166,15 +167,20 @@ def GUI():
     tab_bar = Frame(graf_note)
     tab_pie = Frame(graf_note)
 
+    # Funkcija nupiesia grafikus GUI lange pagal tabus + juos refreshina
+    def grafikai(event=None):
+        bar(tab_bar)
+        pie(tab_pie)
+        menesiai(tab_menesiai)
+
     graf_note.add(tab_menesiai, text='Mėnesiai')
     graf_note.add(tab_bar, text='"Bar" grafikas')
     graf_note.add(tab_pie, text='"Pie" grafikas')
 
+    grafikai()
+    # paspaudus ant kurio nors tabo grafikai refreshinas
+    graf_note.bind("<<NotebookTabChanged>>", grafikai)
 
-
-    
-
-    
     Pagrindinis_langas.mainloop()
 
 GUI()
