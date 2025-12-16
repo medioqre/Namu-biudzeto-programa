@@ -1,11 +1,6 @@
 ﻿{
     "pajamos": [
         {
-            "money": 400,
-            "paj_kategorija": "drug selling",
-            "laikas": "2025-12-31"
-        },
-        {
             "money": 256,
             "paj_kategorija": "Darbas",
             "laikas": "2025-09-18"
@@ -24,6 +19,26 @@
             "money": 67.0,
             "paj_kategorija": "Darbas",
             "laikas": "2025-12-12"
+        },
+        {
+            "money": 123.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 323.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 323.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 23.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
         }
     ],
     "islaidos": [

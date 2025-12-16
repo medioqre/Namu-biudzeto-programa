@@ -5,14 +5,11 @@ import os
 
 datafailas = 'data.json'
 
-isl_kategorijos=['Maistas','Transportas','Laisvalaikis ir pramogos','Kitos išlaidos']
-paj_kategorijos=['Darbas', 'Dovanos','Kitos pajamos'] #nzn kazkas kitas pridekit daugiau
 def load_data():
     if not os.path.exists(datafailas):
         save_data({"pajamos": [], "islaidos": []})
     with open(datafailas, 'r', encoding='utf-8-sig') as f:
         return json.load(f)
-
 
 def save_data(data):
     with open(datafailas, 'w', encoding='utf-8-sig') as f:
@@ -21,11 +18,11 @@ def save_data(data):
 def tikrint_laika(laikas):
     try: 
         datetime.strptime(laikas,"%Y-%m-%d")
-        return False
+        pass
     except ValueError:
         messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD")
 
-def add_pajamos(money,kategorija,laikas,Tree): 
+def add_pajamos(money,kategorija,laikas): 
     data=load_data()
     tikrint_laika(laikas)
 
@@ -38,9 +35,10 @@ def add_pajamos(money,kategorija,laikas,Tree):
         'paj_kategorija':kategorija,
         'laikas':laikas})
         save_data(data)
-        Tree.insert('','end',values=(laikas,kategorija,money))
+        return True
     except ValueError:
         messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+        return False
    
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
@@ -56,8 +54,10 @@ def add_islaidos(money,kategorija,laikas,pavadinimas):
         'laikas':laikas,
         'pavadinimas':pavadinimas,})
         save_data(data)
+        return True
     except ValueError:
         messagebox.showerror("Išlaidų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių") 
+        return False
     
 def delete_pajama(money,kategorija,laikas):
     data=load_data()
@@ -139,3 +139,6 @@ def gaut_menesius():
         menesiai.add(i["laikas"][:7])
 
     return sorted(menesiai)
+def total_balansas():#############################
+    menesiubalansai=sum(list(menesio_balansas().values()))
+    return menesiubalansai

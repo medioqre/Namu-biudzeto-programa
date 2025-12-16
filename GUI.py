@@ -2,7 +2,7 @@
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
-from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
+from data import *
 
 def remove_pajamos(Tree):
     pasirinkta=Tree.selection()
@@ -12,7 +12,8 @@ def remove_pajamos(Tree):
         values = Tree.item(item, "values")
         data, kat, money = values
         Tree.delete(item)
-        delete_pajama(money,kat,data)
+        delete_pajama(money,kat,data) 
+    #------------------refresh_charts()------------ cia idet
 
 def rykiavimas_tree(tree,i,reverse):
     duomenys = [(tree.set(k, i), k) for k in tree.get_children("")]
@@ -23,6 +24,23 @@ def rykiavimas_tree(tree,i,reverse):
     for index, (val, k) in enumerate(duomenys):
         tree.move(k, "", index)
     tree.heading(i, command=lambda kop=i: rykiavimas_tree(tree, kop, not reverse))
+
+def refresh_islaidu_tree(Tree):
+    for i in Tree.get_children():
+        Tree.delete(i)
+    for isl in islaidu_sar():
+        Tree.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
+
+def refresh_pajamu_tree(Tree):
+    for i in Tree.get_children():
+        Tree.delete(i)
+    for paj in pajamu_sar():
+        Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
+
+def refresh_balanso_label():
+    pass
+    #callint total balanse funkcija ir tada .config (text) ta label
+   
 
 def GUI():
 
@@ -66,20 +84,27 @@ def GUI():
     Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
     Iveskite_suma_lab.place(relx=0.02, rely=0.2)
 
-    Suma=Entry(tab_pajamos, justify='center')
-    Suma.place(relx=0.025, rely=0.26)
+    paj_suma=Entry(tab_pajamos, justify='center')
+    paj_suma.place(relx=0.025, rely=0.26)
     
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
     Data_lab.place(relx=0.02, rely=0.35)
 
-    Data_ent=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    Data_ent.place(relx=0.025, rely=0.40)
+    data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
+    data_ent_paj.place(relx=0.025, rely=0.40)
+
+    def on_addpaj_click(Tree):
+        if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
+            pass
+            refresh_pajamu_tree(Tree)
+            #refresh_balance_label()
+            #refresh_charts()
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda:on_addpaj_click(Tree))
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=lambda: remove_pajamos(Tree))
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=lambda: remove_pajamos(Tree)) 
     Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
@@ -100,11 +125,13 @@ def GUI():
     
 
 
+
+
     #IŠLAIDOS TAB-----------------------------------------
 
     Islaidu_kat_label=Label(tab_islaidos, text='Išlaidų kategorija:', font=('Arial', 12, 'bold'))
     Islaidu_kat_label.place(relx=0.02, rely=0.04)
-
+    
     Islaidos_pasirinkimai=('Maistas', 'Transportas', 'Bendros', 't.t.')
     Islaidu_combo=ttk.Combobox(tab_islaidos, values=Islaidos_pasirinkimai, state='readonly')
     Islaidu_combo.current(0)
@@ -114,17 +141,23 @@ def GUI():
     Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
     Iveskite_suma_lab.place(relx=0.02, rely=0.2)
 
-    Suma=Entry(tab_islaidos, justify='center')
-    Suma.place(relx=0.025, rely=0.26)
+    isl_suma=Entry(tab_islaidos, justify='center')
+    isl_suma.place(relx=0.025, rely=0.26)
     
     Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
     Data_islaidos_lab.place(relx=0.02, rely=0.35)
 
-    Data_islaidos_ent=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    Data_islaidos_ent.place(relx=0.025, rely=0.40)
+    data_ent_isl=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
+    data_ent_isl.place(relx=0.025, rely=0.40)
+
+    def on_addisl_click(Tree):
+        if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get()):
+            refresh_islaidu_tree(Tree)
+            #refresh_balanso_label()
+            #refresh_charts()
 
     #Buttons
-    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold') )
+    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = lambda: on_addisl_click(Tree))
     Prideti_islaidos_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
     Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
@@ -140,11 +173,11 @@ def GUI():
         Tree_islaidos.column(col, width=150, stretch=True)
 
     Tree_islaidos.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
-
+    
 
 
     #BALANSO TAB----------------------------------------------------
-    balansas_lab=Label(tab_balansas, text=f'Balansas: {100} Eur', font=('Arial', 12, 'bold'))
+    balansas_lab=Label(tab_balansas, text=f'Balansas: {total_balansas()} Eur', font=('Arial', 12, 'bold'))
     balansas_lab.place(relx=0.43, rely=0.05)
 
     #Treeview balansas
