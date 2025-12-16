@@ -53,7 +53,7 @@ def GUI():
     notebook.add(tab_islaidos, text="Išlaidos")
     notebook.add(tab_balansas, text="Balansas")
 
-    #PAJAMOS FRAME----------------------------------------- 
+    #PAJAMOS TAB----------------------------------------- 
     Pajamų_kat_label=Label(tab_pajamos, text='Pajamų kategorija:', font=('Arial', 12, 'bold'))
     Pajamų_kat_label.place(relx=0.02, rely=0.04)
 
@@ -76,11 +76,11 @@ def GUI():
     Data_ent.place(relx=0.025, rely=0.40)
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
+    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda: add_pajamos(Suma.get(),Pajamu_combo.get(),Data_ent.get(),Tree))
     Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', command=lambda: remove_pajamos(Tree))
-    Pasalinti_myg.place(relx=0.5, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=lambda: remove_pajamos(Tree))
+    Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
     Skyriai=('Data', 'Kategorija', 'Suma')
@@ -97,6 +97,84 @@ def GUI():
     for paj in pajamos:
         Tree.insert('','end',values=(paj['laikas'],paj['paj_kategorija'],paj['money']))
 
+    
+
+
+    #IŠLAIDOS TAB-----------------------------------------
+
+    Islaidu_kat_label=Label(tab_islaidos, text='Išlaidų kategorija:', font=('Arial', 12, 'bold'))
+    Islaidu_kat_label.place(relx=0.02, rely=0.04)
+
+    Islaidos_pasirinkimai=('Maistas', 'Transportas', 'Bendros', 't.t.')
+    Islaidu_combo=ttk.Combobox(tab_islaidos, values=Islaidos_pasirinkimai, state='readonly')
+    Islaidu_combo.current(0)
+    Islaidu_combo.place(relx=0.025, rely=0.1)
+
+    
+    Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
+    Iveskite_suma_lab.place(relx=0.02, rely=0.2)
+
+    Suma=Entry(tab_islaidos, justify='center')
+    Suma.place(relx=0.025, rely=0.26)
+    
+    Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
+    Data_islaidos_lab.place(relx=0.02, rely=0.35)
+
+    Data_islaidos_ent=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
+    Data_islaidos_ent.place(relx=0.025, rely=0.40)
+
+    #Buttons
+    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold') )
+    Prideti_islaidos_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
+
+    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
+    Pasalinti_islaidos_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
+
+    #Treeview
+    Skyriai_islaidos=('Data', 'Kategorija', 'Suma')
+
+    Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
+
+    for col in Skyriai_islaidos:
+        Tree_islaidos.heading(col, text=col)
+        Tree_islaidos.column(col, width=150, stretch=True)
+
+    Tree_islaidos.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
+
+
+
+    #BALANSO TAB----------------------------------------------------
+    balansas_lab=Label(tab_balansas, text=f'Balansas: {100} Eur', font=('Arial', 12, 'bold'))
+    balansas_lab.place(relx=0.43, rely=0.05)
+
+    #Treeview balansas
+    Skyriai_balansas=('Mėnesis', 'Pajamos', 'Išlaidos', 'Balansas')
+
+    Tree_balansas=ttk.Treeview(tab_balansas, columns=Skyriai_balansas, show='headings')
+
+    for col in Skyriai_balansas:
+        Tree_balansas.heading(col, text=col)
+        Tree_balansas.column(col, width=120, anchor='center', stretch=True)
+
+    Tree_balansas.place(relx=0.05, rely=0.15, relwidth=0.9, relheight=0.33)
+
+    #Grafiku tabai
+    graf_note=ttk.Notebook(tab_balansas)
+    graf_note.place(relx=0.05, rely=0.40, relwidth=0.9, relheight=0.45)
+
+    tab_menesiai = Frame(graf_note)
+    tab_bar = Frame(graf_note)
+    tab_pie = Frame(graf_note)
+
+    graf_note.add(tab_menesiai, text='Mėnesiai')
+    graf_note.add(tab_bar, text='"Bar" grafikas')
+    graf_note.add(tab_pie, text='"Pie" grafikas')
+
+
+
+    
+
+    
     Pagrindinis_langas.mainloop()
 
 GUI()
