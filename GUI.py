@@ -2,8 +2,9 @@
 from tkinter import ttk
 from tkinter import messagebox
 from tkcalendar import DateEntry
-from data import add_pajamos, pajamu_sar, islaidu_sar, delete_pajama
+from data import *
 from charts import bar,pie,menesiai
+
 def remove_pajamos(Tree):
     pasirinkta=Tree.selection()
     if not pasirinkta:
@@ -13,7 +14,7 @@ def remove_pajamos(Tree):
         data, kat, money = values
         Tree.delete(item)
         delete_pajama(money,kat,data) 
-    #------------------refresh_charts()------------ cia idet
+    #------------------refresh_charts()------------ cia idet arba nezinau paskiau
 
 def rykiavimas_tree(tree,i,reverse):
     duomenys = [(tree.set(k, i), k) for k in tree.get_children("")]
@@ -28,7 +29,7 @@ def rykiavimas_tree(tree,i,reverse):
 def refresh_islaidu_tree(Tree):
     for i in Tree.get_children():
         Tree.delete(i)
-    for isl in islaidu_sar():
+    for isl in list(islaidu_sar()):
         Tree.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
 
 def refresh_pajamu_tree(Tree):
@@ -38,9 +39,10 @@ def refresh_pajamu_tree(Tree):
         Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
 
 def refresh_balanso_label():
-    pass
-    #callint total balanse funkcija ir tada .config (text) ta label
-   
+    newlabel=total_balansas()
+    balansas_lab.config(text=f'Balansas: {total_balansas()} Eur')
+    
+ 
 
 def GUI():
 
@@ -101,10 +103,9 @@ def GUI():
 
     def on_addpaj_click(Tree):
         if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
-            pass
             refresh_pajamu_tree(Tree)
-            #refresh_balance_label()
-            #refresh_charts()
+            refresh_balanso_label()
+            refresh_grafikus()
 
     #Buttons
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=lambda:on_addpaj_click(Tree))
@@ -163,10 +164,10 @@ def GUI():
     data_ent_isl.place(relx=0.025, rely=0.40)
 
     def on_addisl_click(Tree):
-        if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get()):
+        if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get(), Islaidu_Pavadinimas.get()):
             refresh_islaidu_tree(Tree)
-            #refresh_balanso_label()
-            #refresh_charts()
+            refresh_balanso_label()
+            refresh_grafikus()
 
     #Buttons
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = lambda: on_addisl_click(Tree))
@@ -193,6 +194,10 @@ def GUI():
     balansas_lab=Label(tab_balansas, text=f'Balansas: {total_balansas()} Eur', font=('Arial', 12, 'bold'))
     balansas_lab.place(relx=0.43, rely=0.05)
 
+    def refresh_balanso_label():
+        newlabel=total_balansas()
+        balansas_lab.config(text=f'Balansas: {total_balansas()} Eur')
+
     #Treeview balansas
     Skyriai_balansas=('Mėnesis', 'Pajamos', 'Išlaidos', 'Balansas')
 
@@ -213,18 +218,17 @@ def GUI():
     tab_pie = Frame(graf_note)
 
     # Funkcija nupiesia grafikus GUI lange pagal tabus + juos refreshina
-    def grafikai(event=None):
+    def refresh_grafikus(event=None):
         bar(tab_bar)
         pie(tab_pie)
-        menesiai(tab_menesiai)
+        menesiai(tab_menesiai)  
 
     graf_note.add(tab_menesiai, text='Mėnesiai')
     graf_note.add(tab_bar, text='"Bar" grafikas')
     graf_note.add(tab_pie, text='"Pie" grafikas')
 
-    grafikai()
     # paspaudus ant kurio nors tabo grafikai refreshinas
-    graf_note.bind("<<NotebookTabChanged>>", grafikai)
+    refresh_grafikus()
 
     Pagrindinis_langas.mainloop()
 

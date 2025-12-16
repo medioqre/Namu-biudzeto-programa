@@ -39,6 +39,31 @@
             "money": 23.0,
             "paj_kategorija": "Darbas",
             "laikas": "2025-12-16"
+        },
+        {
+            "money": 123.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 500.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2026-01-08"
+        },
+        {
+            "money": 4.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 1.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
+        },
+        {
+            "money": 1.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-16"
         }
     ],
     "islaidos": [
@@ -65,6 +90,12 @@
             "isl_kategorija": "idk bruh",
             "laikas": "2025-12-12",
             "pavadinimas": "dalykas on god"
+        },
+        {
+            "money": 1233.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-16",
+            "pavadinimas": "asd"
         }
     ]
 }

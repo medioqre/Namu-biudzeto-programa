@@ -139,6 +139,7 @@ def gaut_menesius():
         menesiai.add(i["laikas"][:7])
 
     return sorted(menesiai)
+
 def total_balansas():#############################
     menesiubalansai=sum(list(menesio_balansas().values()))
     return menesiubalansai
