@@ -90,13 +90,13 @@ def GUI():
     Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai=('Data', 'Kategorija', 'Suma')
+    Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
 
     Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
 
     for i in Skyriai:
         Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
-        Tree.column(i, width=150, stretch=True)
+        Tree.column(i, width=80, stretch=True)
 
     Tree.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
 
@@ -144,15 +144,16 @@ def GUI():
     Pasalinti_islaidos_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai_islaidos=('Data', 'Kategorija', 'Suma')
+    Skyriai_islaidos=('Pavadiniams', 'Data', 'Kategorija', 'Suma')
 
     Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=150, stretch=True)
+        Tree_islaidos.column(col, width=80, stretch=True)
 
     Tree_islaidos.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
+
 
 
 
