@@ -49,6 +49,16 @@
             "money": 54.0,
             "paj_kategorija": "Darbas",
             "laikas": "2025-12-17"
+        },
+        {
+            "money": 65.0,
+            "paj_kategorija": "Custom",
+            "laikas": "2025-12-17"
+        },
+        {
+            "money": 800.0,
+            "paj_kategorija": "t.t.",
+            "laikas": "2025-12-17"
         }
     ],
     "islaidos": [
@@ -189,6 +199,18 @@
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
             "pavadinimas": "iyugaws"
+        },
+        {
+            "money": 85.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "jyf"
+        },
+        {
+            "money": 90.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "bababuey"
         }
     ]
 }

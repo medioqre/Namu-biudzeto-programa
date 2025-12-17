@@ -20,7 +20,7 @@ def GUI():
         for i in Tree_islaidos.get_children():
             Tree_islaidos.delete(i)
         for isl in islaidu_sar():
-            Tree_islaidos.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
+            Tree_islaidos.insert('','end',values=(isl["pavadinimas"],isl['laikas'],isl['isl_kategorija'],isl['money']))
 
     def refresh_pajamu_tree():
         for i in Tree.get_children():
