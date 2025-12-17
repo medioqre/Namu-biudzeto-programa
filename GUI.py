@@ -46,7 +46,8 @@ def GUI():
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
-    Pagrindinis_langas.geometry('600x800')
+    Pagrindinis_langas.minsize(550, 325)
+
 
    
 
@@ -57,33 +58,49 @@ def GUI():
     tab_pajamos = Frame(notebook)
     tab_islaidos = Frame(notebook)
     tab_balansas = Frame(notebook)
+    
 
     notebook.add(tab_pajamos, text="Pajamos")
     notebook.add(tab_islaidos, text="Išlaidos")
     notebook.add(tab_balansas, text="Balansas")
 
     #PAJAMOS TAB----------------------------------------- 
-    Pajamų_kat_label=Label(tab_pajamos, text='Pajamų kategorija:', font=('Arial', 12, 'bold'))
-    Pajamų_kat_label.place(relx=0.025, rely=0.04)
+
+    left = ttk.Frame(tab_pajamos)
+    right = ttk.Frame(tab_pajamos)
+    
+    left.grid(row=0, column=0, sticky="n", padx=10, pady=10)
+    right.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
+
+    tab_pajamos.columnconfigure(1, weight=1)
+    tab_pajamos.rowconfigure(0, weight=1)
+
+    right.columnconfigure(0, weight=1)
+    right.rowconfigure(0, weight=1)
+
+
+
+    Pajamų_kat_label=Label(left, text='Pajamų kategorija:', font=('Arial', 12, 'bold'))
+    Pajamų_kat_label.grid(row=0, column=0, sticky="w",pady=5,padx=5)
 
     Pajamu_pasirinkimai=('Darbas', 'Savarankiška veikla', 'Custom', 't.t.')
-    Pajamu_combo=ttk.Combobox(tab_pajamos, values=Pajamu_pasirinkimai, state='readonly')
+    Pajamu_combo=ttk.Combobox(left, values=Pajamu_pasirinkimai, state='readonly')
     Pajamu_combo.current(0)
-    Pajamu_combo.place(relx=0.03, rely=0.08)
+    Pajamu_combo.grid(row=1, column=0, sticky="we",pady=5,padx=5)
 
     
     
-    Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.025, rely=0.13)
+    Iveskite_suma_lab=Label(left, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
+    Iveskite_suma_lab.grid(row=2, column=0, sticky="w",pady=5,padx=5)
 
-    paj_suma=Entry(tab_pajamos, justify='center')
-    paj_suma.place(relx=0.03, rely=0.17)
+    paj_suma=Entry(left, justify='center')
+    paj_suma.grid(row=3, column=0, sticky="we",pady=5,padx=5)
     
-    Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_lab.place(relx=0.025, rely=0.22)
+    Data_lab=Label(left, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
+    Data_lab.grid(row=4, column=0, sticky="w",pady=5,padx=5)
 
-    data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    data_ent_paj.place(relx=0.03, rely=0.26)
+    data_ent_paj=DateEntry(left, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
+    data_ent_paj.grid(row=5, column=0, sticky="w",pady=5,padx=5)
 
     def on_addpaj_click():
         if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
@@ -93,60 +110,69 @@ def GUI():
             paj_suma.delete(0,END) 
 
     #Buttons
-    Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
-    Prideti_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
+    Prideti_myg=Button(left, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
+    Prideti_myg.grid(row=6, column=0, sticky="we",pady=5,padx=5)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos) 
-    Pasalinti_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_myg=Button(right, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos) 
+    Pasalinti_myg.grid(row=1, column=0,pady=5,padx=5)
 
     #Treeview
     Skyriai=('Data', 'Kategorija', 'Suma')
 
-    Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
+    Tree=ttk.Treeview(right, columns=Skyriai, show='headings')
 
     for i in Skyriai:
         Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(j, False))
         Tree.column(i, width=80, stretch=True)
 
-    Tree.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
+    Tree.grid(row=0, column=0, sticky="nsew",pady=5,padx=5)
 
     pajamos=pajamu_sar()
     for paj in pajamos:
         Tree.insert('','end',values=(paj['laikas'],paj['paj_kategorija'],paj['money']))
-
     
 
 
 
 
     #IŠLAIDOS TAB-----------------------------------------
+    leftisl = ttk.Frame(tab_islaidos)
+    rightisl = ttk.Frame(tab_islaidos)
+    
+    leftisl.grid(row=0, column=0, sticky="n", padx=10, pady=10)
+    rightisl.grid(row=0, column=1, sticky="nsew", padx=10, pady=10)
 
-    Islaidu_kat_label=Label(tab_islaidos, text='Išlaidų kategorija:', font=('Arial', 12, 'bold'))
-    Islaidu_kat_label.place(relx=0.025, rely=0.04)
+    tab_islaidos.columnconfigure(1, weight=1)
+    tab_islaidos.rowconfigure(0, weight=1)
+
+    rightisl.columnconfigure(0, weight=1)
+    rightisl.rowconfigure(0, weight=1)
+
+    Islaidu_kat_label=Label(leftisl, text='Išlaidų kategorija:', font=('Arial', 12, 'bold'))
+    Islaidu_kat_label.grid(row=0, column=0, sticky="w",pady=5,padx=5)
     
     Islaidos_pasirinkimai=('Maistas', 'Transportas', 'Bendros', 't.t.')
-    Islaidu_combo=ttk.Combobox(tab_islaidos, values=Islaidos_pasirinkimai, state='readonly')
+    Islaidu_combo=ttk.Combobox(leftisl, values=Islaidos_pasirinkimai, state='readonly')
     Islaidu_combo.current(0)
-    Islaidu_combo.place(relx=0.03, rely=0.08)
+    Islaidu_combo.grid(row=1, column=0, sticky="we",pady=5,padx=5)
 
-    Islaidu_pav_lab=Label(tab_islaidos, text='Pavadinimas', font=('Arial', 12, 'bold'))
-    Islaidu_pav_lab.place(relx=0.025, rely=0.13)
+    Islaidu_pav_lab=Label(leftisl, text='Pavadinimas', font=('Arial', 12, 'bold'))
+    Islaidu_pav_lab.grid(row=2, column=0, sticky="w",pady=5,padx=5)
 
-    Islaidu_Pavadinimas=Entry(tab_islaidos, justify='center')
-    Islaidu_Pavadinimas.place(relx=0.03, rely=0.17)
-
+    Islaidu_Pavadinimas=Entry(leftisl, justify='center')
+    Islaidu_Pavadinimas.grid(row=3, column=0, sticky="we",pady=5,padx=5)
     
-    Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.025, rely=0.22)
+    Iveskite_suma_lab=Label(leftisl, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
+    Iveskite_suma_lab.grid(row=4, column=0, sticky="w",pady=5,padx=5)
 
-    isl_suma=Entry(tab_islaidos, justify='center')
-    isl_suma.place(relx=0.03, rely=0.26)
+    isl_suma=Entry(leftisl, justify='center')
+    isl_suma.grid(row=5, column=0, sticky="we",pady=5,padx=5)
     
-    Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_islaidos_lab.place(relx=0.025, rely=0.31)
+    Data_islaidos_lab=Label(leftisl, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
+    Data_islaidos_lab.grid(row=6, column=0, sticky="w",pady=5,padx=5)
 
-    data_ent_isl=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    data_ent_isl.place(relx=0.03, rely=0.35)
+    data_ent_isl=DateEntry(leftisl, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
+    data_ent_isl.grid(row=7, column=0, sticky="w",pady=5,padx=5)
 
     def on_addisl_click():
         if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get(), Islaidu_Pavadinimas.get()):
@@ -157,22 +183,22 @@ def GUI():
             Islaidu_Pavadinimas.delete(0,END)
 
     #Buttons
-    Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
-    Prideti_islaidos_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
+    Prideti_islaidos_myg=Button(leftisl, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
+    Prideti_islaidos_myg.grid(row=8, sticky='ew',pady=5,padx=5)
 
-    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
-    Pasalinti_islaidos_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_islaidos_myg=Button(rightisl, text='Pašalinti', font=('Arial', 12, 'bold'))
+    Pasalinti_islaidos_myg.grid(row=1,pady=5,padx=5)
 
     #Treeview
     Skyriai_islaidos=('Data', 'Kategorija', 'Suma', 'Pavadinimas')
 
-    Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
+    Tree_islaidos=ttk.Treeview(rightisl, columns=Skyriai_islaidos, show='headings')
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
         Tree_islaidos.column(col, width=80, stretch=True)
 
-    Tree_islaidos.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
+    Tree_islaidos.grid(row=0, sticky='nsew')
     
 
 
