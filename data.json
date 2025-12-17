@@ -44,10 +44,67 @@
             "money": 500.0,
             "paj_kategorija": "Darbas",
             "laikas": "2026-01-08"
+        },
+        {
+            "money": 54.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-17"
+        },
+        {
+            "money": 65.0,
+            "paj_kategorija": "Custom",
+            "laikas": "2025-12-17"
+        },
+        {
+            "money": 800.0,
+            "paj_kategorija": "t.t.",
+            "laikas": "2025-12-17"
         }
     ],
     "islaidos": [
         {
+            "pavadinimas": "Maxima",
+            "isl_kategorija": "Maistas",
+            "money": 50,
+            "laikas": "2025-01-12"
+        },
+        {
+            "pavadinimas": "Autobusas",
+            "isl_kategorija": "Transportas",
+            "money": 130,
+            "laikas": "2025-01-15"
+        },
+        {
+            "pavadinimas": "Maxima",
+            "isl_kategorija": "Maistas",
+            "money": 20,
+            "laikas": "2025-01-18"
+        },
+        {
+            "money": 500.0,
+            "isl_kategorija": "idk bruh",
+            "laikas": "2025-12-12",
+            "pavadinimas": "dalykas on god"
+        },
+        {
+            "money": 1233.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-16",
+            "pavadinimas": "asd"
+        },
+        {
+            "money": 80.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "maxima"
+        },
+        {
+            "money": 12.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "zxc"
+        },
+        {
             "money": 123.0,
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
@@ -84,12 +141,6 @@
             "pavadinimas": "tt"
         },
         {
-            "money": 234.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "tt"
-        },
-        {
             "money": 111.0,
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
@@ -114,34 +165,52 @@
             "pavadinimas": "12"
         },
         {
-            "money": 123.0,
+            "money": 40.0,
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
-            "pavadinimas": "asd"
+            "pavadinimas": "bd"
         },
         {
-            "money": 67.0,
-            "isl_kategorija": "Transportas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "buss"
-        },
-        {
-            "money": 67.0,
-            "isl_kategorija": "Transportas",
-            "laikas": "2025-08-05",
-            "pavadinimas": "buss"
-        },
-        {
-            "money": 67.0,
-            "isl_kategorija": "Transportas",
-            "laikas": "2025-08-05",
-            "pavadinimas": "buss"
-        },
-        {
-            "money": 222.0,
+            "money": 40.0,
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
-            "pavadinimas": "asd"
+            "pavadinimas": "bd"
+        },
+        {
+            "money": 56.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "jaba"
+        },
+        {
+            "money": 45.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "yrd"
+        },
+        {
+            "money": 54.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "ujaysguytas"
+        },
+        {
+            "money": 87.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "iyugaws"
+        },
+        {
+            "money": 85.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "jyf"
+        },
+        {
+            "money": 90.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "bababuey"
         }
     ]
 }
