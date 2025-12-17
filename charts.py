@@ -40,8 +40,13 @@ def bar(parent):
 
     ax.set_xticks(x)
     ax.set_xticklabels(menesiai, rotation=45, ha='right')
+    ax.set_xlabel('Mėnuo')
+    ax.set_ylabel('Pajamos ir išlaidos (EUR)')
     ax.set_title('Mėnesio pajamos ir išlaidos')
+    fig.tight_layout()
     ax.legend()
+    
+
 
     canvas=FigureCanvasTkAgg(fig, master=parent)
     canvas.draw()
@@ -68,7 +73,6 @@ def pie(parent):
     canvas.draw()
     canvas.get_tk_widget().pack(fill='both',expand=True)
     
-    plt.show()
 
 # plot menesio balanso chartas
 def menesiai(parent):
