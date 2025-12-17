@@ -71,24 +71,19 @@ def GUI():
     Pajamu_combo.current(0)
     Pajamu_combo.place(relx=0.03, rely=0.08)
 
-    Pajamu_pav_lab=Label(tab_pajamos, text='Pavadinimas', font=('Arial', 12, 'bold'))
-    Pajamu_pav_lab.place(relx=0.025, rely=0.13)
-
-    Pajamu_Pavadinimas=Entry(tab_pajamos, justify='center')
-    Pajamu_Pavadinimas.place(relx=0.03, rely=0.17)
-
+    
     
     Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.025, rely=0.22)
+    Iveskite_suma_lab.place(relx=0.025, rely=0.13)
 
     paj_suma=Entry(tab_pajamos, justify='center')
-    paj_suma.place(relx=0.03, rely=0.26)
+    paj_suma.place(relx=0.03, rely=0.17)
     
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_lab.place(relx=0.025, rely=0.31)
+    Data_lab.place(relx=0.025, rely=0.22)
 
     data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    data_ent_paj.place(relx=0.03, rely=0.35)
+    data_ent_paj.place(relx=0.03, rely=0.26)
 
     def on_addpaj_click():
         if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
@@ -196,11 +191,11 @@ def GUI():
         Tree_balansas.heading(col, text=col)
         Tree_balansas.column(col, width=120, anchor='center', stretch=True)
 
-    Tree_balansas.place(relx=0.05, rely=0.15, relwidth=0.9, relheight=0.33)
+    Tree_balansas.place(relx=0.05, rely=0.10, relwidth=0.9, relheight=0.33)
 
     #Grafiku tabai
     graf_note=ttk.Notebook(tab_balansas)
-    graf_note.place(relx=0.05, rely=0.45, relwidth=0.9, relheight=0.45)
+    graf_note.place(relx=0.05, rely=0.40, relwidth=0.9, relheight=0.6)
 
     tab_menesiai = Frame(graf_note)
     tab_bar = Frame(graf_note)
