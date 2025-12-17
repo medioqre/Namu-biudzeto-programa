@@ -28,6 +28,19 @@ def GUI():
         for paj in pajamu_sar():
             Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
 
+    def refresh_balanso_tree():
+        for i in Tree_balansas.get_children():
+            Tree_balansas.delete(i)
+        pajamos = menesio_pajamos()
+        islaidos = menesio_islaidos()
+        balansas = menesio_balansas()
+        men = gaut_menesius()
+        for m in men:
+            paj = pajamos.get(m, 0)
+            isl = islaidos.get(m, 0)
+            bal = balansas.get(m, 0)
+            Tree_balansas.insert('','end',values=(m,paj,isl,bal))
+
     def remove_pajamos():
         pasirinkta=Tree.selection()
         if not pasirinkta:
@@ -39,6 +52,7 @@ def GUI():
             delete_pajama(money,kat,data) 
         refresh_balanso_label()
         refresh_grafikus()
+        refresh_balanso_tree()
 
     def remove_islaidos():
         pasirinkta=Tree_islaidos.selection()
@@ -51,6 +65,7 @@ def GUI():
             delete_islaida(pav,money,kat,data) 
         refresh_balanso_label()
         refresh_grafikus()
+        refresh_balanso_tree()
 
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
@@ -99,6 +114,7 @@ def GUI():
             refresh_pajamu_tree()
             refresh_balanso_label()
             refresh_grafikus()
+            refresh_balanso_tree()
 
     #Buttons
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
@@ -160,6 +176,7 @@ def GUI():
             refresh_islaidu_tree()
             refresh_balanso_label()
             refresh_grafikus()
+            refresh_balanso_tree()
 
     #Buttons
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
@@ -196,10 +213,11 @@ def GUI():
     Skyriai_balansas=('Mėnesis', 'Pajamos', 'Išlaidos', 'Balansas')
 
     Tree_balansas=ttk.Treeview(tab_balansas, columns=Skyriai_balansas, show='headings')
+    refresh_balanso_tree()
 
-    for col in Skyriai_balansas:
-        Tree_balansas.heading(col, text=col)
-        Tree_balansas.column(col, width=120, anchor='center', stretch=True)
+    for i in Skyriai_balansas:
+        Tree_balansas.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree_balansas, j, False))
+        Tree_balansas.column(i, width=120, anchor='center', stretch=True)
 
     Tree_balansas.place(relx=0.05, rely=0.10, relwidth=0.9, relheight=0.33)
 
