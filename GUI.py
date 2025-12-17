@@ -43,10 +43,22 @@ def GUI():
         refresh_balanso_label()
         refresh_grafikus()
 
+    def remove_islaidos():
+        pasirinkta=Tree_islaidos.selection()
+        if not pasirinkta:
+            messagebox.showerror('Klaida','Pasirinkite kurį entry norite ištrinti.')
+        for item in pasirinkta:
+            values = Tree_islaidos.item(item, "values")
+            pav,data, kat, money = values
+            Tree_islaidos.delete(item)
+            delete_islaida(pav,money,kat,data) 
+        refresh_balanso_label()
+        refresh_grafikus()
+
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
-    Pagrindinis_langas.geometry('800x700')
+    Pagrindinis_langas.geometry('900x700')
 
    
 
@@ -95,12 +107,11 @@ def GUI():
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
     Prideti_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos) 
+    Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos)
     Pasalinti_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
-
+    Skyriai=('Data', 'Kategorija', 'Suma')
     Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
 
     for i in Skyriai:
@@ -157,7 +168,7 @@ def GUI():
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
     Prideti_islaidos_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
 
-    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
+    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'),command=remove_islaidos)
     Pasalinti_islaidos_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
@@ -167,11 +178,13 @@ def GUI():
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=150, stretch=True)
+        Tree_islaidos.column(col, width=130, stretch=True)
 
     Tree_islaidos.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
     
-
+    islaidos=islaidu_sar()
+    for isl in islaidos:
+        Tree_islaidos.insert('','end',values=(isl['pavadinimas'],isl['laikas'],isl['isl_kategorija'],isl['money']))
 
 
     #BALANSO TAB----------------------------------------------------

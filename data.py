@@ -113,7 +113,7 @@ def pajamu_sar():
 
 def islaidu_sar():
     duomenys=load_data()
-    islaidos=duomenys.get('islaidos',[])
+    return duomenys.get('islaidos',[])
 
 def menesio_balansas():
     paj= menesio_pajamos()
