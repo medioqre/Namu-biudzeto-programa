@@ -48,15 +48,7 @@ def GUI():
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
     Pagrindinis_langas.geometry('800x700')
 
-    #Main meniu------------------------------------------
-    Meniu=Menu(Pagrindinis_langas)
-    Pagrindinis_langas.config(menu=Meniu)
-    Main_meniu=Menu(Meniu)
-    Meniu.add_cascade(label='Menu', menu=Main_meniu)
-
-    Main_meniu.add_command(label='Load data')
-    Main_meniu.add_command(label='Save data')
-    Main_meniu.add_command(label='Exit')
+   
 
     #Pajamos, islaidos, balansas menu
     notebook = ttk.Notebook(Pagrindinis_langas)
@@ -72,31 +64,31 @@ def GUI():
 
     #PAJAMOS TAB----------------------------------------- 
     Pajamų_kat_label=Label(tab_pajamos, text='Pajamų kategorija:', font=('Arial', 12, 'bold'))
-    Pajamų_kat_label.place(relx=0.02, rely=0.04)
+    Pajamų_kat_label.place(relx=0.025, rely=0.04)
 
     Pajamu_pasirinkimai=('Darbas', 'Savarankiška veikla', 'Custom', 't.t.')
     Pajamu_combo=ttk.Combobox(tab_pajamos, values=Pajamu_pasirinkimai, state='readonly')
     Pajamu_combo.current(0)
-    Pajamu_combo.place(relx=0.025, rely=0.1)
+    Pajamu_combo.place(relx=0.03, rely=0.08)
 
     Pajamu_pav_lab=Label(tab_pajamos, text='Pavadinimas', font=('Arial', 12, 'bold'))
-    Pajamu_pav_lab.place(relx=0.02, rely=0.15)
+    Pajamu_pav_lab.place(relx=0.025, rely=0.13)
 
     Pajamu_Pavadinimas=Entry(tab_pajamos, justify='center')
-    Pajamu_Pavadinimas.place(relx=0.025, rely=0.2)
+    Pajamu_Pavadinimas.place(relx=0.03, rely=0.17)
 
     
     Iveskite_suma_lab=Label(tab_pajamos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
+    Iveskite_suma_lab.place(relx=0.025, rely=0.22)
 
     paj_suma=Entry(tab_pajamos, justify='center')
-    paj_suma.place(relx=0.025, rely=0.26)
+    paj_suma.place(relx=0.03, rely=0.26)
     
     Data_lab=Label(tab_pajamos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_lab.place(relx=0.02, rely=0.4)
+    Data_lab.place(relx=0.025, rely=0.31)
 
     data_ent_paj=DateEntry(tab_pajamos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    data_ent_paj.place(relx=0.025, rely=0.40)
+    data_ent_paj.place(relx=0.03, rely=0.35)
 
     def on_addpaj_click():
         if add_pajamos(paj_suma.get(),Pajamu_combo.get(),data_ent_paj.get()):
@@ -106,10 +98,10 @@ def GUI():
 
     #Buttons
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
-    Prideti_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
+    Prideti_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
 
     Pasalinti_myg=Button(tab_pajamos, text='Pašalinti', font=('Arial', 12, 'bold'),  command=remove_pajamos) 
-    Pasalinti_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
     Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
@@ -120,7 +112,7 @@ def GUI():
         Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
         Tree.column(i, width=80, stretch=True)
 
-    Tree.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
+    Tree.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
 
     pajamos=pajamu_sar()
     for paj in pajamos:
@@ -134,31 +126,31 @@ def GUI():
     #IŠLAIDOS TAB-----------------------------------------
 
     Islaidu_kat_label=Label(tab_islaidos, text='Išlaidų kategorija:', font=('Arial', 12, 'bold'))
-    Islaidu_kat_label.place(relx=0.02, rely=0.04)
+    Islaidu_kat_label.place(relx=0.025, rely=0.04)
     
     Islaidos_pasirinkimai=('Maistas', 'Transportas', 'Bendros', 't.t.')
     Islaidu_combo=ttk.Combobox(tab_islaidos, values=Islaidos_pasirinkimai, state='readonly')
     Islaidu_combo.current(0)
-    Islaidu_combo.place(relx=0.025, rely=0.1)
+    Islaidu_combo.place(relx=0.03, rely=0.08)
 
     Islaidu_pav_lab=Label(tab_islaidos, text='Pavadinimas', font=('Arial', 12, 'bold'))
-    Islaidu_pav_lab.place(relx=0.02, rely=0.15)
+    Islaidu_pav_lab.place(relx=0.025, rely=0.13)
 
     Islaidu_Pavadinimas=Entry(tab_islaidos, justify='center')
-    Islaidu_Pavadinimas.place(relx=0.025, rely=0.2)
+    Islaidu_Pavadinimas.place(relx=0.03, rely=0.17)
 
     
     Iveskite_suma_lab=Label(tab_islaidos, text='Įveskite sumą:', font=('Arial', 12, 'bold'))
-    Iveskite_suma_lab.place(relx=0.02, rely=0.26)
+    Iveskite_suma_lab.place(relx=0.025, rely=0.22)
 
     isl_suma=Entry(tab_islaidos, justify='center')
-    isl_suma.place(relx=0.025, rely=0.26)
+    isl_suma.place(relx=0.03, rely=0.26)
     
     Data_islaidos_lab=Label(tab_islaidos, text='Pasirinkite datą:', font=('Arial', 12, 'bold'))
-    Data_islaidos_lab.place(relx=0.02, rely=0.4)
+    Data_islaidos_lab.place(relx=0.025, rely=0.31)
 
     data_ent_isl=DateEntry(tab_islaidos, width=14, background='darkblue', foreground='white', borderwidth=2, year=2025, date_pattern='y-mm-dd')
-    data_ent_isl.place(relx=0.025, rely=0.40)
+    data_ent_isl.place(relx=0.03, rely=0.35)
 
     def on_addisl_click():
         if add_islaidos(isl_suma.get(),Islaidu_combo.get(),data_ent_isl.get(), Islaidu_Pavadinimas.get()):
@@ -168,10 +160,10 @@ def GUI():
 
     #Buttons
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
-    Prideti_islaidos_myg.place(relx=0.02, rely=0.55, relwidth=0.25, relheight=0.1)
+    Prideti_islaidos_myg.place(relx=0.15, rely=0.55, relwidth=0.25, relheight=0.1)
 
     Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
-    Pasalinti_islaidos_myg.place(relx=0.3, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_islaidos_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
     Skyriai_islaidos=('Pavadiniams', 'Data', 'Kategorija', 'Suma')
@@ -180,9 +172,9 @@ def GUI():
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=80, stretch=True)
+        Tree_islaidos.column(col, width=150, stretch=True)
 
-    Tree_islaidos.place(relx=0.25, rely=0.02, relwidth=0.6, relheight=0.4)
+    Tree_islaidos.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
     
 
 
@@ -208,7 +200,7 @@ def GUI():
 
     #Grafiku tabai
     graf_note=ttk.Notebook(tab_balansas)
-    graf_note.place(relx=0.05, rely=0.40, relwidth=0.9, relheight=0.45)
+    graf_note.place(relx=0.05, rely=0.45, relwidth=0.9, relheight=0.45)
 
     tab_menesiai = Frame(graf_note)
     tab_bar = Frame(graf_note)
