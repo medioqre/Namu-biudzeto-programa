@@ -70,7 +70,7 @@ def GUI():
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
-    Pagrindinis_langas.minsize(550, 325)
+    Pagrindinis_langas.minsize(620, 750)
 
 
    
@@ -141,7 +141,7 @@ def GUI():
     Pasalinti_myg.grid(row=1, column=0,pady=5,padx=5)
 
     #Treeview
-    Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
+    Skyriai=('Data', 'Kategorija', 'Suma')
 
     Tree=ttk.Treeview(right, columns=Skyriai, show='headings')
 
@@ -211,8 +211,8 @@ def GUI():
     Prideti_islaidos_myg=Button(leftisl, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
     Prideti_islaidos_myg.grid(row=8, sticky='ew',pady=5,padx=5)
 
-    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'))
-    Pasalinti_islaidos_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
+    Pasalinti_islaidos_myg=Button(tab_islaidos, text='Pašalinti', font=('Arial', 12, 'bold'), command=remove_islaidos)
+    Pasalinti_islaidos_myg.grid(row=1,column=1)
 
     #Treeview
     Skyriai_islaidos=('Pavadiniams', 'Data', 'Kategorija', 'Suma')
@@ -221,7 +221,7 @@ def GUI():
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=150, stretch=True)
+        Tree_islaidos.column(col, width=80, stretch=True)
 
     Tree_islaidos.grid(row=0, sticky='nsew') 
     
@@ -232,7 +232,12 @@ def GUI():
 
     #BALANSO TAB----------------------------------------------------
     balansas_lab=Label(tab_balansas, text=f'Balansas: {total_balansas()} Eur', font=('Arial', 16, 'bold'))
-    balansas_lab.place(relx=0.5, rely=0.05,anchor=CENTER)
+    balansas_lab.grid(row=0,column=0,pady=5,padx=3)
+
+    tab_balansas.columnconfigure(0, weight=1)
+    tab_balansas.rowconfigure(1, weight=1)  # Treeview row
+    tab_balansas.rowconfigure(3, weight=3)  # Graphs row (bigger)
+
 
     def refresh_balanso_label():
         newlabel=total_balansas()
@@ -248,11 +253,11 @@ def GUI():
         Tree_balansas.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree_balansas, j, False))
         Tree_balansas.column(i, width=120, anchor='center', stretch=True)
 
-    Tree_balansas.place(relx=0.5, rely=0.10, relwidth=0.9, relheight=0.33,anchor='n')
+    Tree_balansas.grid(row=1,column=0,pady=5,padx=3,sticky='nsew')
 
     #Grafiku tabai
     graf_note=ttk.Notebook(tab_balansas)
-    graf_note.place(relx=0.5, rely=0.40, relwidth=0.9, relheight=0.6,anchor='n')
+    graf_note.grid(row=2,column=0,pady=5,padx=3,sticky='nsew')
 
     tab_menesiai = Frame(graf_note)
     tab_bar = Frame(graf_note)

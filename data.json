@@ -51,13 +51,8 @@
             "laikas": "2025-12-17"
         },
         {
-            "money": 65.0,
-            "paj_kategorija": "Custom",
-            "laikas": "2025-12-17"
-        },
-        {
-            "money": 800.0,
-            "paj_kategorija": "t.t.",
+            "money": 10000.0,
+            "paj_kategorija": "Darbas",
             "laikas": "2025-12-17"
         }
     ],
@@ -103,18 +98,6 @@
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
             "pavadinimas": "zxc"
-        },
-        {
-            "money": 123.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "asd"
-        },
-        {
-            "money": 234.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "tt"
         },
         {
             "money": 234.0,
@@ -207,10 +190,10 @@
             "pavadinimas": "jyf"
         },
         {
-            "money": 90.0,
+            "money": 125.0,
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-17",
-            "pavadinimas": "bababuey"
+            "pavadinimas": "ababa"
         }
     ]
 }
