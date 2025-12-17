@@ -6,7 +6,7 @@ from data import *
 from charts import bar,pie,menesiai
  
 def GUI():
-    def rykiavimas_tree(i,reverse):
+    def rykiavimas_tree(Tree,i,reverse):
         duomenys = [(Tree.set(k, i), k) for k in Tree.get_children("")]
         try:
             duomenys.sort(key=lambda t: float(t[0]), reverse=reverse)
@@ -17,19 +17,16 @@ def GUI():
         Tree.heading(i, command=lambda kop=i: rykiavimas_tree(Tree, kop, not reverse))
 
     def refresh_islaidu_tree():
-        for i in Tree.get_children():
-            Tree.delete(i)
-        for isl in list(islaidu_sar()):
-            Tree.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
+        for i in Tree_islaidos.get_children():
+            Tree_islaidos.delete(i)
+        for isl in islaidu_sar():
+            Tree_islaidos.insert('','end',values=(isl["laikas"],isl['isl_kategorija'],isl['money'],isl['pavadinimas']))
 
     def refresh_pajamu_tree():
         for i in Tree.get_children():
             Tree.delete(i)
         for paj in pajamu_sar():
             Tree.insert('','end',values=(paj["laikas"],paj['paj_kategorija'],paj['money']))
-        def refresh_balanso_label():
-            newlabel=total_balansas()
-            balansas_lab.config(text=f'Balansas: {total_balansas()} Eur')
 
     def remove_pajamos():
         pasirinkta=Tree.selection()
@@ -176,9 +173,9 @@ def GUI():
 
     Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
 
-    for col in Skyriai_islaidos:
-        Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=130, stretch=True)
+    for i in Skyriai_islaidos:
+        Tree_islaidos.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree_islaidos, j, False))
+        Tree_islaidos.column(i, width=130, stretch=True)
 
     Tree_islaidos.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
     
