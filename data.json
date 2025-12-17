@@ -86,6 +86,84 @@
             "isl_kategorija": "Maistas",
             "laikas": "2025-12-16",
             "pavadinimas": "asd"
+        },
+        {
+            "money": 80.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "maxima"
+        },
+        {
+            "money": 12.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "zxc"
+        },
+        {
+            "money": 123.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "asd"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 234.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "tt"
+        },
+        {
+            "money": 111.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "12"
+        },
+        {
+            "money": 111.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "12"
+        },
+        {
+            "money": 111.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "12"
+        },
+        {
+            "money": 111.0,
+            "isl_kategorija": "Maistas",
+            "laikas": "2025-12-17",
+            "pavadinimas": "12"
         }
     ]
 }
