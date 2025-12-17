@@ -18,33 +18,36 @@ def save_data(data):
 def tikrint_laika(laikas):
     try: 
         datetime.strptime(laikas,"%Y-%m-%d")
-        pass
-    except ValueError:
+        return True
+    except:
         messagebox.showerror("Laiko klaida", "Laikas turi būti formatu YYYY-MM-DD")
+        return False
+        
 
 def add_pajamos(money,kategorija,laikas): 
     data=load_data()
-    tikrint_laika(laikas)
-
-    try:
-        if float(money) <=0:
-            messagebox.showerror("Klaida", "Suma turi būti teigiama ir ne nulis")
-            return
-        data['pajamos'].append({
-        'money':float(money), 
-        'paj_kategorija':kategorija,
-        'laikas':laikas})
-        save_data(data)
-        return True
-    except ValueError:
-        messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
-        return False
+    
+    if tikrint_laika(laikas):
+        try:
+        
+            if float(money) <=0:
+                messagebox.showerror("Klaida", "Suma turi būti teigiama ir ne nulis")
+                return
+            data['pajamos'].append({
+            'money':float(money), 
+            'paj_kategorija':kategorija,
+            'laikas':laikas})
+            save_data(data)
+            return True
+        except ValueError:
+            messagebox.showerror("Pajamų error","Nepalikite sumos lauko tuščio ir neįrašykite raidžių")
+            return False
    
 def add_islaidos(money,kategorija,laikas,pavadinimas):
     data=load_data()
-    tikrint_laika(laikas)
-
+    
     try:
+        tikrint_laika(laikas)
         if float(money) <=0:
             messagebox.showerror("Klaida", "Suma turi būti teigiama ir ne nulis")
             return
@@ -113,7 +116,7 @@ def pajamu_sar():
 
 def islaidu_sar():
     duomenys=load_data()
-    islaidos=duomenys.get('islaidos',[])
+    return duomenys.get('islaidos',[])
 
 def menesio_balansas():
     paj= menesio_pajamos()
@@ -125,8 +128,7 @@ def menesio_balansas():
     for menesis in isl:
         if menesis not in balansas:
             balansas[menesis] = paj.get(menesis,0) - isl.get(menesis, 0)
-    balansas=dict(sorted(balansas.items()))
-    return balansas
+    return dict(sorted(balansas.items()))
 
 def gaut_menesius():
     data = load_data()
@@ -140,6 +142,6 @@ def gaut_menesius():
 
     return sorted(menesiai)
 
-def total_balansas():#############################
+def total_balansas():
     menesiubalansai=sum(list(menesio_balansas().values()))
     return menesiubalansai

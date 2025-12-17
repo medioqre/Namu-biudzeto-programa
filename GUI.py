@@ -14,7 +14,7 @@ def GUI():
             duomenys.sort(key=lambda t: t[0], reverse=reverse)
         for index, (val, k) in enumerate(duomenys):
             Tree.move(k, "", index)
-        Tree.heading(i, command=lambda kop=i: rykiavimas_tree(Tree, kop, not reverse))
+        Tree.heading(i, command=lambda kop=i: rykiavimas_tree(kop, not reverse))
 
     def refresh_islaidu_tree():
         for i in Tree.get_children():
@@ -46,7 +46,7 @@ def GUI():
     #Pagrindinis langas
     Pagrindinis_langas=Tk()
     Pagrindinis_langas.title('Namų biudžeto skaičiuoklė')
-    Pagrindinis_langas.geometry('800x700')
+    Pagrindinis_langas.geometry('600x800')
 
    
 
@@ -90,6 +90,7 @@ def GUI():
             refresh_pajamu_tree()
             refresh_balanso_label()
             refresh_grafikus()
+            paj_suma.delete(0,END) 
 
     #Buttons
     Prideti_myg=Button(tab_pajamos, text='Pridėti', font=('Arial', 12, 'bold'), command=on_addpaj_click)
@@ -99,12 +100,12 @@ def GUI():
     Pasalinti_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai=('Pavadinimas', 'Data', 'Kategorija', 'Suma')
+    Skyriai=('Data', 'Kategorija', 'Suma')
 
     Tree=ttk.Treeview(tab_pajamos, columns=Skyriai, show='headings')
 
     for i in Skyriai:
-        Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
+        Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(j, False))
         Tree.column(i, width=80, stretch=True)
 
     Tree.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
@@ -152,6 +153,8 @@ def GUI():
             refresh_islaidu_tree()
             refresh_balanso_label()
             refresh_grafikus()
+            isl_suma.delete(0,END) 
+            Islaidu_Pavadinimas.delete(0,END)
 
     #Buttons
     Prideti_islaidos_myg=Button(tab_islaidos, text='Pridėti', font=('Arial', 12, 'bold'),command = on_addisl_click)
@@ -161,13 +164,13 @@ def GUI():
     Pasalinti_islaidos_myg.place(relx=0.55, rely=0.55, relwidth=0.25, relheight=0.1)
 
     #Treeview
-    Skyriai_islaidos=('Pavadiniams', 'Data', 'Kategorija', 'Suma')
+    Skyriai_islaidos=('Data', 'Kategorija', 'Suma', 'Pavadinimas')
 
     Tree_islaidos=ttk.Treeview(tab_islaidos, columns=Skyriai_islaidos, show='headings')
 
     for col in Skyriai_islaidos:
         Tree_islaidos.heading(col, text=col)
-        Tree_islaidos.column(col, width=150, stretch=True)
+        Tree_islaidos.column(col, width=80, stretch=True)
 
     Tree_islaidos.place(relx=0.3, rely=0.02, relwidth=0.6, relheight=0.4)
     
@@ -175,8 +178,8 @@ def GUI():
 
 
     #BALANSO TAB----------------------------------------------------
-    balansas_lab=Label(tab_balansas, text=f'Balansas: {total_balansas()} Eur', font=('Arial', 12, 'bold'))
-    balansas_lab.place(relx=0.43, rely=0.05)
+    balansas_lab=Label(tab_balansas, text=f'Balansas: {total_balansas()} Eur', font=('Arial', 16, 'bold'))
+    balansas_lab.place(relx=0.5, rely=0.05,anchor=CENTER)
 
     def refresh_balanso_label():
         newlabel=total_balansas()
@@ -191,22 +194,21 @@ def GUI():
         Tree_balansas.heading(col, text=col)
         Tree_balansas.column(col, width=120, anchor='center', stretch=True)
 
-    Tree_balansas.place(relx=0.05, rely=0.10, relwidth=0.9, relheight=0.33)
+    Tree_balansas.place(relx=0.5, rely=0.10, relwidth=0.9, relheight=0.33,anchor='n')
 
     #Grafiku tabai
     graf_note=ttk.Notebook(tab_balansas)
-    graf_note.place(relx=0.05, rely=0.40, relwidth=0.9, relheight=0.6)
+    graf_note.place(relx=0.5, rely=0.40, relwidth=0.9, relheight=0.6,anchor='n')
 
     tab_menesiai = Frame(graf_note)
     tab_bar = Frame(graf_note)
     tab_pie = Frame(graf_note)
 
     # Funkcija nupiesia grafikus GUI lange pagal tabus + juos refreshina
-    graf_note.add(tab_menesiai, text='Mėnesiai')
-    graf_note.add(tab_bar, text='"Bar" grafikas')
-    graf_note.add(tab_pie, text='"Pie" grafikas')
+    graf_note.add(tab_menesiai, text='Mėnesio balansai')
+    graf_note.add(tab_bar, text='Mėnesių pajamos ir išlaidos')
+    graf_note.add(tab_pie, text='Išlaidos pagal kategorijas')
 
-    # paspaudus ant kurio nors tabo grafikai refreshinas
     def refresh_grafikus():
         bar(tab_bar)
         pie(tab_pie)
