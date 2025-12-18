@@ -14,7 +14,8 @@ def GUI():
             duomenys.sort(key=lambda t: t[0], reverse=reverse)
         for index, (val, k) in enumerate(duomenys):
             Tree.move(k, "", index)
-        Tree.heading(i, command=lambda kop=i: rykiavimas_tree(kop, not reverse))
+
+        Tree.heading(i, command=lambda kop=i: rykiavimas_tree(Tree, kop, not reverse))
 
     def refresh_islaidu_tree():
         for i in Tree_islaidos.get_children():
@@ -146,7 +147,7 @@ def GUI():
     Tree=ttk.Treeview(right, columns=Skyriai, show='headings')
 
     for i in Skyriai:
-        Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(j, False))
+        Tree.heading(i, text=i, command=lambda j=i: rykiavimas_tree(Tree, j, False))
         Tree.column(i, width=80, stretch=True)
 
     Tree.grid(row=0, column=0, sticky="nsew",pady=5,padx=5)
@@ -220,8 +221,9 @@ def GUI():
     Tree_islaidos=ttk.Treeview(rightisl, columns=Skyriai_islaidos, show='headings')
 
     for col in Skyriai_islaidos:
-        Tree_islaidos.heading(col, text=col)
+        Tree_islaidos.heading(col, text=col, command=lambda j=col: rykiavimas_tree(Tree_islaidos, j, False))
         Tree_islaidos.column(col, width=80, stretch=True)
+
 
     Tree_islaidos.grid(row=0, sticky='nsew') 
     
