@@ -1,80 +1,23 @@
 ﻿{
     "pajamos": [
         {
-            "money": 256,
+            "money": 800.0,
             "paj_kategorija": "Darbas",
-            "laikas": "2025-09-18"
-        },
-        {
-            "money": 123.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-06-18"
-        },
-        {
-            "money": 323.0,
-            "paj_kategorija": "Savarankiška veikla",
-            "laikas": "2026-05-06"
-        },
-        {
-            "money": 67.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-12"
-        },
-        {
-            "money": 123.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
-        },
-        {
-            "money": 323.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
-        },
-        {
-            "money": 323.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
-        },
-        {
-            "money": 123.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-16"
-        },
-        {
-            "money": 500.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2026-01-08"
-        },
-        {
-            "money": 54.0,
-            "paj_kategorija": "Darbas",
-            "laikas": "2025-12-17"
+            "laikas": "2025-12-18"
         }
     ],
     "islaidos": [
         {
-            "money": 1233.0,
+            "money": 300.0,
             "isl_kategorija": "Maistas",
-            "laikas": "2025-12-16",
-            "pavadinimas": "asd"
+            "laikas": "2025-11-04",
+            "pavadinimas": "Maxima"
         },
         {
-            "money": 80.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "maxima"
-        },
-        {
-            "money": 12.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2025-12-17",
-            "pavadinimas": "zxc"
-        },
-        {
-            "money": 555.0,
-            "isl_kategorija": "Maistas",
-            "laikas": "2026-01-30",
-            "pavadinimas": "hmm"
+            "money": 50.0,
+            "isl_kategorija": "Transportas",
+            "laikas": "2025-11-06",
+            "pavadinimas": "Kuras"
         }
     ]
 }
