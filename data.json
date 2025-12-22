@@ -4,6 +4,11 @@
             "money": 800.0,
             "paj_kategorija": "Darbas",
             "laikas": "2025-12-18"
+        },
+        {
+            "money": 33.0,
+            "paj_kategorija": "Darbas",
+            "laikas": "2025-12-18"
         }
     ],
     "islaidos": [
